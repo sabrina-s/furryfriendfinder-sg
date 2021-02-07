@@ -1,0 +1,21 @@
+{
+  "name": "furryfriendfinder-sg",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "npm run start --prefix ./server",
+    "test": "npm run test --prefix ./client && npm run test --prefix ./server",
+    "install": "npm install --prefix ./client && npm install --prefix ./server",
+    "heroku-postbuild": "npm run build --prefix ./client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabrina-s/furryfriendfinder-sg.git"
+  },
+  "author": "Sabrina Sulong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sabrina-s/furryfriendfinder-sg/issues"
+  },
+  "homepage": "https://github.com/sabrina-s/furryfriendfinder-sg#readme"
+}
