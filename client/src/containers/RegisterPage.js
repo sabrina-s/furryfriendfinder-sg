@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { REGISTER_API } from "../constants/api";
 import { useFormik } from "formik";
 import { object, string, ref } from "yup";
@@ -8,10 +9,15 @@ import "../stylesheets/forms.css";
 import FFFTextField from "../components/common/FFFTextField";
 
 const RegisterPage = ({ setCurrentUser }) => {
+  const history = useHistory();
+
   const handleRegister = (values) => {
     axios
       .post(REGISTER_API, values)
-      .then((response) => setCurrentUser(response.data.user))
+      .then((response) => {
+        setCurrentUser(response.data.user);
+        history.push("/");
+      })
       .catch(console.error);
   };
 
