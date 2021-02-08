@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import Navbar from "./components/common/Navbar/Navbar";
+import Navbar from "./containers/Navbar/Navbar";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import RegisterPage from "./containers/RegisterPage";
 import LoginPage from "./containers/LoginPage";

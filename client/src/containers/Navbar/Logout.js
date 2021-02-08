@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { LOGOUT_API } from "../../../constants/api";
-import "../../../stylesheets/buttons.css";
+import { LOGOUT_API } from "../../constants/api";
+import "../../stylesheets/buttons.css";
 
 const Logout = ({ setCurrentUser }) => {
   const history = useHistory();

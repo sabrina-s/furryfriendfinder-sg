@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { AppBar, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../../context/User";
+import { UserContext } from "../../context/User";
 import { AccountCircle } from "@material-ui/icons";
 import Logout from "./Logout";
-import FFFIconText from "../FFFIconText";
-import "../../../stylesheets/buttons.css";
+import FFFIconText from "../../components/common/FFFIconText";
+import "../../stylesheets/buttons.css";
 
 const useStyles = makeStyles((theme) => ({
   title: {
