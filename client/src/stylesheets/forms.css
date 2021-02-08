@@ -5,3 +5,9 @@
   margin: 0 auto;
   padding: 30px;
 }
+
+@media (max-width: 800px) {
+  .forms__container {
+    width: 80%;
+  }
+}

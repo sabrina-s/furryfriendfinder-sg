@@ -4,14 +4,11 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../../context/User";
 import { AccountCircle } from "@material-ui/icons";
 import Logout from "./Logout";
+import FFFIconText from "../FFFIconText";
 import "../../../stylesheets/buttons.css";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   title: {
-    flexGrow: 1,
     color: "#6a3838",
     textDecoration: "none",
   },
@@ -42,10 +39,9 @@ const Navbar = ({ setCurrentUser }) => {
 
         {currentUser && (
           <div className="fff__flex fff__center_align">
-            <div className="current-user fff__flex fff__center_align">
+            <FFFIconText text={currentUser.username}>
               <AccountCircle className={classes.icon} />
-              <div>{currentUser.username}</div>
-            </div>
+            </FFFIconText>
             <Logout setCurrentUser={setCurrentUser} />
           </div>
         )}
