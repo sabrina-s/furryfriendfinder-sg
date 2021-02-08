@@ -8,13 +8,13 @@ import "../stylesheets/forms.css";
 import FFFTextField from "../components/common/FFFTextField";
 import FFFSnackbar from "../components/common/FFFSnackbar";
 
-const LoginPage = () => {
+const LoginPage = ({ setCurrentUser }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = (values) => {
     axios
       .post(LOGIN_API, values)
-      .then((response) => console.log(response.data.user))
+      .then((response) => setCurrentUser(response.data.user))
       .catch((err) => setErrorMessage(err.response.data.message));
   };
 

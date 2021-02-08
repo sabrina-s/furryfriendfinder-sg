@@ -1,6 +1,14 @@
-import React from "react";
-import { AppBar, makeStyles, Toolbar, Typography } from "@material-ui/core";
+import React, { useContext } from "react";
+import {
+  AppBar,
+  Button,
+  makeStyles,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../../context/User";
+import { AccountCircle } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,10 +34,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
+  icon: {
+    marginRight: "5px",
+  },
 }));
 
 const Navbar = () => {
   const classes = useStyles();
+  const currentUser = useContext(UserContext);
 
   return (
     <AppBar position="static" className={classes.appBar} data-testid="navbar">
@@ -40,14 +52,25 @@ const Navbar = () => {
           </Link>
         </Typography>
 
-        <div className="navLinks">
-          <Link className={classes.navLinks} to="/login">
-            Login
-          </Link>
-          <Link className={classes.navLinks} to="/register">
-            Register
-          </Link>
-        </div>
+        {currentUser && (
+          <div className="fff__flex">
+            <div className="current-user fff__flex">
+              <AccountCircle className={classes.icon} />
+              <div>{currentUser.username}</div>
+            </div>
+          </div>
+        )}
+
+        {!currentUser && (
+          <div className="nav-links">
+            <Link className={classes.navLinks} to="/login">
+              Login
+            </Link>
+            <Link className={classes.navLinks} to="/register">
+              Register
+            </Link>
+          </div>
+        )}
       </Toolbar>
     </AppBar>
   );
