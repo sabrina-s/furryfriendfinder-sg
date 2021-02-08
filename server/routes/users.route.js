@@ -2,6 +2,7 @@ const _ = require("lodash");
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user.model");
+const auth = require("../middleware/auth");
 
 router.post("/register", async (req, res) => {
   try {
@@ -10,7 +11,7 @@ router.post("/register", async (req, res) => {
     const token = user.generateJWT();
 
     return res
-      .status(200)
+      .status(201)
       .cookie("access_token", token, {
         maxAge: 1000 * 3600 * 24 * 7,
         httpOnly: true,
@@ -56,5 +57,10 @@ router.post("/logout", async (req, res) =>
     .clearCookie("access_token")
     .json({ message: "Logout success!" })
 );
+
+router.get("/me", auth.required, async (req, res) => {
+  const user = await User.findById(req.user.id).select("username -_id");
+  res.send(user);
+});
 
 module.exports = router;

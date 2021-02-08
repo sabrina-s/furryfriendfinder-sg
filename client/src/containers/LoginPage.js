@@ -15,7 +15,7 @@ const LoginPage = ({ setCurrentUser }) => {
 
   const handleLogin = (values) => {
     axios
-      .post(LOGIN_API, values)
+      .post(LOGIN_API, values, { withCredentials: true })
       .then((response) => {
         setCurrentUser(response.data.user);
         history.push("/");
