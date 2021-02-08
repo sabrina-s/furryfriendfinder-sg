@@ -7,11 +7,11 @@ import { Button } from "@material-ui/core";
 import "../stylesheets/forms.css";
 import FFFTextField from "../components/common/FFFTextField";
 
-const RegisterPage = () => {
+const RegisterPage = ({ setCurrentUser }) => {
   const handleRegister = (values) => {
     axios
       .post(REGISTER_API, values)
-      .then((response) => console.log(response))
+      .then((response) => setCurrentUser(response.data.user))
       .catch(console.error);
   };
 
