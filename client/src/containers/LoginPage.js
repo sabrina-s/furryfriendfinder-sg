@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { LOGIN_API } from "../constants/api";
 import { useFormik } from "formik";
 import { object, string } from "yup";
@@ -9,12 +10,16 @@ import FFFTextField from "../components/common/FFFTextField";
 import FFFSnackbar from "../components/common/FFFSnackbar";
 
 const LoginPage = ({ setCurrentUser }) => {
+  const history = useHistory();
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = (values) => {
     axios
       .post(LOGIN_API, values)
-      .then((response) => setCurrentUser(response.data.user))
+      .then((response) => {
+        setCurrentUser(response.data.user);
+        history.push("/");
+      })
       .catch((err) => setErrorMessage(err.response.data.message));
   };
 
