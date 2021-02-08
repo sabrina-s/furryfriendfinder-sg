@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <UserContext.Provider value={currentUser}>
         <BrowserRouter>
-          <Navbar />
+          <Navbar setCurrentUser={setCurrentUser} />
           <Switch>
             <Route path="/" exact render={() => <h1>home</h1>} />
             <Route path="/register" component={RegisterPage} />

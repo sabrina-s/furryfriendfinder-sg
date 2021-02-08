@@ -1,14 +1,10 @@
 import React, { useContext } from "react";
-import {
-  AppBar,
-  Button,
-  makeStyles,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../context/User";
 import { AccountCircle } from "@material-ui/icons";
+import Logout from "./Logout";
+import "../../../stylesheets/buttons.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,14 +18,6 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     background: "#d5b0b0",
   },
-  navLinks: {
-    textDecoration: "none",
-    color: "unset",
-    marginLeft: "20px",
-    textTransform: "uppercase",
-    fontSize: "0.9em",
-    fontWeight: "600",
-  },
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
@@ -39,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar = ({ setCurrentUser }) => {
   const classes = useStyles();
   const currentUser = useContext(UserContext);
 
@@ -53,20 +41,21 @@ const Navbar = () => {
         </Typography>
 
         {currentUser && (
-          <div className="fff__flex">
-            <div className="current-user fff__flex">
+          <div className="fff__flex fff__center_align">
+            <div className="current-user fff__flex fff__center_align">
               <AccountCircle className={classes.icon} />
               <div>{currentUser.username}</div>
             </div>
+            <Logout setCurrentUser={setCurrentUser} />
           </div>
         )}
 
         {!currentUser && (
           <div className="nav-links">
-            <Link className={classes.navLinks} to="/login">
+            <Link className="btn__plain" to="/login">
               Login
             </Link>
-            <Link className={classes.navLinks} to="/register">
+            <Link className="btn__plain" to="/register">
               Register
             </Link>
           </div>

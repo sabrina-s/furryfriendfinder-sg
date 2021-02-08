@@ -5,3 +5,7 @@
 .fff__flex {
   display: flex;
 }
+
+.fff__center_align {
+  align-items: center;
+}
