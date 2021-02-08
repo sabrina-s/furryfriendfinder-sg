@@ -7,7 +7,7 @@ app.use(express.json());
 const cors = require("cors");
 const origin = () => {
   if (process.env.NODE_ENV === "production") {
-    return "https://furryfriendfinder-sg.herokuapp.com";
+    return "https://furryfriendfinder-sg.netlify.app";
   } else {
     return "http://localhost:3000";
   }
