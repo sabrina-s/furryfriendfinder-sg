@@ -28,12 +28,12 @@ router.post("/login", async (req, res) => {
   const user = await User.findOne({ username: req.body.username });
 
   if (!user)
-    return res.status(422).json({ message: "Invalid email or password." });
+    return res.status(422).json({ message: "Invalid username or password." });
 
   const valid = await user.isValidPassword(req.body.password);
 
   if (!valid) {
-    return res.status(422).json({ message: "Invalid email or password." });
+    return res.status(422).json({ message: "Invalid username or password." });
   }
 
   const token = user.generateJWT();

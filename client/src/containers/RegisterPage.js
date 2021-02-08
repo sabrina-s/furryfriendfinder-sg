@@ -42,7 +42,7 @@ const RegisterPage = () => {
           placeholder="Username"
           onChange={formik.handleChange}
           value={formik.values.username}
-          error={formik.touched.username && formik.errors.username}
+          error={formik.touched.username && !!formik.errors.username}
           helperText={formik.touched.username && formik.errors.username}
         />
 
@@ -52,7 +52,7 @@ const RegisterPage = () => {
           placeholder="Password"
           onChange={formik.handleChange}
           value={formik.values.password}
-          error={formik.touched.password && formik.errors.password}
+          error={formik.touched.password && !!formik.errors.password}
           helperText={formik.touched.password && formik.errors.password}
         />
 
@@ -63,7 +63,7 @@ const RegisterPage = () => {
           onChange={formik.handleChange}
           value={formik.values.confirmPassword}
           error={
-            formik.touched.confirmPassword && formik.errors.confirmPassword
+            formik.touched.confirmPassword && !!formik.errors.confirmPassword
           }
           helperText={
             formik.touched.confirmPassword && formik.errors.confirmPassword
