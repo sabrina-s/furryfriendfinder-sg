@@ -3,6 +3,23 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+// CORS
+const cors = require("cors");
+const origin = () => {
+  if (process.env.NODE_ENV === "production") {
+    return "https://furryfriendfinder-sg.herokuapp.com";
+  } else {
+    return "http://localhost:3000";
+  }
+};
+app.use(
+  cors({
+    origin: origin(),
+    credentials: true,
+  })
+);
+
+// Routes
 app.get("/", (req, res) => {
   res.send("Hello from Express");
 });
