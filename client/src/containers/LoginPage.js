@@ -6,6 +6,7 @@ import axios from "axios";
 import { Button } from "@material-ui/core";
 import "../stylesheets/forms.css";
 import FFFTextField from "../components/common/FFFTextField";
+import FFFSnackbar from "../components/common/FFFSnackbar";
 
 const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -57,6 +58,10 @@ const LoginPage = () => {
         <Button color="primary" variant="contained" type="submit">
           Login
         </Button>
+
+        {errorMessage && (
+          <FFFSnackbar severity="error">{errorMessage}</FFFSnackbar>
+        )}
       </form>
     </div>
   );
