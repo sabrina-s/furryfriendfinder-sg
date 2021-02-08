@@ -24,7 +24,7 @@ const Navbar = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position="static" className={classes.appBar}>
+    <AppBar position="static" className={classes.appBar} data-testid="navbar">
       <Toolbar>
         <Typography variant="h6" className={classes.title} align="left">
           FurryFriendFinder
