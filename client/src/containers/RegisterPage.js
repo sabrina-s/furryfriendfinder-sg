@@ -3,6 +3,9 @@ import { REGISTER_API } from "../constants/api";
 import { useFormik } from "formik";
 import { object, string, ref } from "yup";
 import axios from "axios";
+import { Button } from "@material-ui/core";
+import "../stylesheets/forms.css";
+import FFFTextField from "../components/common/FFFTextField";
 
 const RegisterPage = () => {
   const handleRegister = (values) => {
@@ -32,44 +35,44 @@ const RegisterPage = () => {
 
   return (
     <div className="register-page">
-      <form onSubmit={formik.handleSubmit}>
-        <input
+      <form onSubmit={formik.handleSubmit} className="forms__container">
+        <FFFTextField
           id="username"
-          name="username"
           type="text"
           placeholder="Username"
           onChange={formik.handleChange}
           value={formik.values.username}
+          error={formik.touched.username && formik.errors.username}
+          helperText={formik.touched.username && formik.errors.username}
         />
-        {formik.touched.username && formik.errors.username ? (
-          <div>{formik.errors.username}</div>
-        ) : null}
 
-        <input
+        <FFFTextField
           id="password"
-          name="password"
           type="password"
           placeholder="Password"
           onChange={formik.handleChange}
           value={formik.values.password}
+          error={formik.touched.password && formik.errors.password}
+          helperText={formik.touched.password && formik.errors.password}
         />
-        {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
-        ) : null}
 
-        <input
+        <FFFTextField
           id="confirmPassword"
-          name="confirmPassword"
           type="password"
           placeholder="Confirm Password"
           onChange={formik.handleChange}
           value={formik.values.confirmPassword}
+          error={
+            formik.touched.confirmPassword && formik.errors.confirmPassword
+          }
+          helperText={
+            formik.touched.confirmPassword && formik.errors.confirmPassword
+          }
         />
-        {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-          <div>{formik.errors.confirmPassword}</div>
-        ) : null}
 
-        <button type="submit">Submit</button>
+        <Button color="primary" variant="contained" type="submit">
+          Register
+        </Button>
       </form>
     </div>
   );
