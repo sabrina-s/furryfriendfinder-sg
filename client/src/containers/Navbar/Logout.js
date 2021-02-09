@@ -9,8 +9,9 @@ const Logout = ({ setCurrentUser }) => {
 
   const handleLogout = () => {
     axios
-      .post(LOGOUT_API)
-      .then(() => {
+      .post(LOGOUT_API, {}, { withCredentials: true })
+      .then((res) => {
+        console.log(res);
         setCurrentUser();
         history.push("/");
       })

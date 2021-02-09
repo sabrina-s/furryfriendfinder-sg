@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
     await user.save();
     const token = user.generateJWT();
 
-    return res
+    res
       .status(201)
       .cookie("access_token", token, {
         maxAge: 1000 * 3600 * 24 * 7,
@@ -21,7 +21,7 @@ router.post("/register", async (req, res) => {
         user: _.pick(user, ["username"]),
       });
   } catch (error) {
-    return res.status(400).json({ message: "Unable to register user." });
+    res.status(400).json({ message: "Unable to register user." });
   }
 });
 
@@ -39,7 +39,7 @@ router.post("/login", async (req, res) => {
 
   const token = user.generateJWT();
 
-  return res
+  res
     .status(200)
     .cookie("access_token", token, {
       maxAge: 1000 * 3600 * 24 * 7,
@@ -51,12 +51,12 @@ router.post("/login", async (req, res) => {
     });
 });
 
-router.post("/logout", async (req, res) =>
+router.post("/logout", async (req, res) => {
   res
     .status(200)
     .clearCookie("access_token")
-    .json({ message: "Logout success!" })
-);
+    .json({ message: "Logout success!" });
+});
 
 router.get("/me", auth.required, async (req, res) => {
   const user = await User.findById(req.user.id).select("username -_id");
