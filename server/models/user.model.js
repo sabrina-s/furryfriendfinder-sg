@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is required."],
     minlength: 8,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 function hashPassword(password) {
@@ -41,6 +45,7 @@ userSchema.methods.generateJWT = function () {
     {
       id: this._id,
       username: this.username,
+      isAdmin: this.isAdmin,
     },
     secret,
     {
