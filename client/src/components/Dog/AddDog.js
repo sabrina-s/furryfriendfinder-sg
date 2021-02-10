@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 import { DOGS_API } from "../../constants/api";
 import FFFSnackbar from "../common/FFFSnackbar";
+import "../../stylesheets/forms.css";
 
 const AddDog = () => {
   const [successMessage, setSuccessMessage] = useState("");
@@ -46,11 +47,11 @@ const AddDog = () => {
   });
 
   return (
-    <>
-      <h2>Add a dog</h2>
+    <div className="forms__container">
+      <div className="forms__title">Add a dog</div>
       <form
         onSubmit={formik.handleSubmit}
-        className="forms__left"
+        className="forms__center"
         data-testid="add-dog-form"
       >
         <FFFTextField
@@ -117,7 +118,7 @@ const AddDog = () => {
       {successMessage && (
         <FFFSnackbar severity="success">{successMessage}</FFFSnackbar>
       )}
-    </>
+    </div>
   );
 };
 
