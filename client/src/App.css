@@ -2,6 +2,21 @@
   font-family: "Roboto";
 }
 
+footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  text-align: center;
+  background: #d5b0b066;
+  font-size: 0.8em;
+}
+
+a {
+  color: #6a3838;
+}
+
 body {
   color: #383838;
 }

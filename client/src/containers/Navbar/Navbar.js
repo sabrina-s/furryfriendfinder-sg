@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: "5px",
   },
+  dogLogo: {
+    height: "40px",
+    marginRight: "10px",
+  },
 }));
 
 const Navbar = ({ setCurrentUser }) => {
@@ -33,6 +37,12 @@ const Navbar = ({ setCurrentUser }) => {
     <AppBar position="static" className={classes.appBar} data-testid="navbar">
       <Toolbar className={classes.toolbar}>
         <div className="nav-left fff__flex fff__center_align">
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/logo.svg`}
+            alt="dog logo"
+            className={classes.dogLogo}
+          />
+
           <Typography variant="h6">
             <Link className={classes.title} to="/">
               FurryFriendFinder
