@@ -1,6 +1,8 @@
 const _ = require("lodash");
 const express = require("express");
 const Dog = require("../models/dog.model");
+const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -8,7 +10,7 @@ router.get("/", async (req, res) => {
   res.status(200).json(dogs);
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", [auth.required, admin], async (req, res, next) => {
   try {
     const dog = new Dog(
       _.pick(req.body, [
