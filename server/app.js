@@ -28,6 +28,8 @@ app.get("/", (req, res) => {
 
 const usersRouter = require("./routes/users.route");
 app.use("/users", usersRouter);
+const dogsRouter = require("./routes/dogs.route");
+app.use("/dogs", dogsRouter);
 
 // Default error handler
 app.use((err, req, res, next) => {
