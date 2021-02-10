@@ -1,5 +1,9 @@
-.App {
-  text-align: center;
+* {
+  font-family: "Roboto";
+}
+
+body {
+  color: #383838;
 }
 
 .fff__flex {

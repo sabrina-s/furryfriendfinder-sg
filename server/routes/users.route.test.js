@@ -107,7 +107,7 @@ describe("Users", () => {
         .set("Cookie", `access_token=${token}`);
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({ username: "username2" });
+      expect(response.body).toEqual({ username: "username2", isAdmin: false });
     });
 
     it("should throw error if invalid access_token is provided", async () => {

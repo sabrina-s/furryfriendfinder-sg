@@ -13,8 +13,8 @@ const useStyles = makeStyles({
 
 const FFFTextField = ({
   id,
-  type,
-  placeholder,
+  type = "text",
+  placeholder = `${id.charAt(0).toUpperCase()}${id.slice(1)}`,
   onChange,
   value,
   error,
@@ -28,6 +28,7 @@ const FFFTextField = ({
       id={id}
       name={id}
       type={type}
+      label={placeholder}
       placeholder={placeholder}
       onChange={onChange}
       value={value}

@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     color: "#6a3838",
     textDecoration: "none",
+    marginRight: "10px",
   },
   appBar: {
     background: "#d5b0b0",
@@ -31,11 +32,19 @@ const Navbar = ({ setCurrentUser }) => {
   return (
     <AppBar position="static" className={classes.appBar} data-testid="navbar">
       <Toolbar className={classes.toolbar}>
-        <Typography variant="h6">
-          <Link className={classes.title} to="/">
-            FurryFriendFinder
-          </Link>
-        </Typography>
+        <div className="nav-left fff__flex fff__center_align">
+          <Typography variant="h6">
+            <Link className={classes.title} to="/">
+              FurryFriendFinder
+            </Link>
+          </Typography>
+
+          {currentUser && currentUser.isAdmin && (
+            <Link className="btn__plain" to="/admin">
+              Admin
+            </Link>
+          )}
+        </div>
 
         {currentUser && (
           <div className="fff__flex fff__center_align">
@@ -47,7 +56,7 @@ const Navbar = ({ setCurrentUser }) => {
         )}
 
         {!currentUser && (
-          <div className="nav-links">
+          <div className="nav-right">
             <Link className="btn__plain" to="/login">
               Login
             </Link>

@@ -41,11 +41,9 @@ const LoginPage = ({ setCurrentUser }) => {
 
   return (
     <div className="login-page">
-      <form onSubmit={formik.handleSubmit} className="forms__container">
+      <form onSubmit={formik.handleSubmit} className="forms__center">
         <FFFTextField
           id="username"
-          type="text"
-          placeholder="Username"
           onChange={formik.handleChange}
           value={formik.values.username}
           error={formik.touched.username && !!formik.errors.username}
@@ -55,7 +53,6 @@ const LoginPage = ({ setCurrentUser }) => {
         <FFFTextField
           id="password"
           type="password"
-          placeholder="Password"
           onChange={formik.handleChange}
           value={formik.values.password}
           error={formik.touched.password && !!formik.errors.password}

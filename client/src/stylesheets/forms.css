@@ -1,4 +1,4 @@
-.forms__container {
+.forms__center {
   display: flex;
   flex-direction: column;
   width: 500px;
@@ -6,8 +6,17 @@
   padding: 30px;
 }
 
+.forms__left {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  padding: 0 20px;
+}
+
 @media (max-width: 800px) {
-  .forms__container {
+  .forms__center,
+  .forms__left {
     width: 80%;
+    margin: 0 auto;
   }
 }

@@ -6,12 +6,13 @@ import RegisterPage from "./containers/RegisterPage";
 import LoginPage from "./containers/LoginPage";
 import { UserContext } from "./context/User";
 import { useCurrentUserHook } from "./hooks/useCurrentUserHook";
+import AdminPage from "./containers/AdminPage";
 
 function App() {
   const { currentUser, setCurrentUser } = useCurrentUserHook();
 
   return (
-    <div className="App">
+    <div>
       <UserContext.Provider value={currentUser}>
         <BrowserRouter>
           <Navbar setCurrentUser={setCurrentUser} />
@@ -25,6 +26,8 @@ function App() {
               path="/login"
               render={() => <LoginPage setCurrentUser={setCurrentUser} />}
             />
+            {/* TODO: Protect /admin route from non admins */}
+            <Route path="/admin" render={() => <AdminPage />} />
           </Switch>
         </BrowserRouter>
       </UserContext.Provider>

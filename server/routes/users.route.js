@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
     })
     .json({
       message: "Login success!",
-      user: _.pick(user, ["id", "username"]),
+      user: _.pick(user, ["id", "username", "isAdmin"]),
     });
 });
 
@@ -65,7 +65,7 @@ router.post("/logout", async (req, res) => {
 });
 
 router.get("/me", auth.required, async (req, res) => {
-  const user = await User.findById(req.user.id).select("username -_id");
+  const user = await User.findById(req.user.id).select("username isAdmin -_id");
   res.send(user);
 });
 
