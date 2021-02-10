@@ -92,5 +92,32 @@ describe("Users", () => {
     });
   });
 
-  describe("GET /me", () => {});
+  describe("GET /users/me", () => {
+    it("should retrieve currently logged in user via JWT access_token", async () => {
+      const newUser = {
+        username: "username2",
+        password: "password2",
+      };
+      const user = new User(newUser);
+      await user.save();
+      const token = user.generateJWT();
+
+      const response = await request(app)
+        .get("/users/me")
+        .set("Cookie", `access_token=${token}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({ username: "username2" });
+    });
+
+    it("should throw error if invalid access_token is provided", async () => {
+      const invalidToken = 666;
+
+      const response = await request(app)
+        .get("/users/me")
+        .set("Cookie", `access_token=${invalidToken}`);
+
+      expect(response.status).toBe(500);
+    });
+  });
 });
