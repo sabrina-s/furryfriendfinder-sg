@@ -11,7 +11,6 @@ const Logout = ({ setCurrentUser }) => {
     axios
       .post(LOGOUT_API, {}, { withCredentials: true })
       .then((res) => {
-        console.log(res);
         setCurrentUser();
         history.push("/");
       })

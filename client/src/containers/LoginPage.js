@@ -20,7 +20,9 @@ const LoginPage = ({ setCurrentUser }) => {
         setCurrentUser(response.data.user);
         history.push("/");
       })
-      .catch((err) => setErrorMessage(err.response.data.message));
+      .catch((err) => {
+        err.response && setErrorMessage(err.response.data.message);
+      });
   };
 
   const formik = useFormik({
