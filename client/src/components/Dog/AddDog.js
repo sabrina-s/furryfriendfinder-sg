@@ -33,14 +33,18 @@ const AddDog = () => {
       name: string().required("Please enter name of dog."),
       gender: string().required("Please select gender."),
       description: string().required("Please enter a short description."),
-      hdbApproved: boolean().required("Please specify if dog is hdb approved."),
+      hdbApproved: boolean().required("Please specify if dog is HDB approved."),
     }),
   });
 
   return (
     <>
       <h2>Add a dog</h2>
-      <form onSubmit={formik.handleSubmit} className="forms__left">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="forms__left"
+        data-testid="add-dog-form"
+      >
         <FFFTextField
           id="name"
           onChange={formik.handleChange}
@@ -92,7 +96,12 @@ const AddDog = () => {
           label="HDB Approved?"
         />
 
-        <Button color="primary" variant="contained" type="submit">
+        <Button
+          color="primary"
+          variant="contained"
+          type="submit"
+          data-testid="create-dog-btn"
+        >
           Create
         </Button>
       </form>
