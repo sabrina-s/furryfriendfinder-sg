@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { object, string, boolean } from "yup";
 import FFFTextField from "../common/FFFTextField";
@@ -12,10 +12,18 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
+import axios from "axios";
+import { DOGS_API } from "../../constants/api";
+import FFFSnackbar from "../common/FFFSnackbar";
 
 const AddDog = () => {
+  const [successMessage, setSuccessMessage] = useState("");
+
   const addDog = (values) => {
-    console.log(values);
+    axios
+      .post(DOGS_API, values, { withCredentials: true })
+      .then((response) => setSuccessMessage(response.data.message))
+      .catch(console.error);
   };
 
   const formik = useFormik({
@@ -105,6 +113,10 @@ const AddDog = () => {
           Create
         </Button>
       </form>
+
+      {successMessage && (
+        <FFFSnackbar severity="success">{successMessage}</FFFSnackbar>
+      )}
     </>
   );
 };
