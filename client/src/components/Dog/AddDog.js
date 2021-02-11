@@ -20,10 +20,13 @@ import "../../stylesheets/forms.css";
 const AddDog = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
-  const addDog = (values) => {
+  const addDog = (values, resetForm) => {
     axios
       .post(DOGS_API, values, { withCredentials: true })
-      .then((response) => setSuccessMessage(response.data.message))
+      .then((response) => {
+        setSuccessMessage(response.data.message);
+        resetForm();
+      })
       .catch(console.error);
   };
 
@@ -35,8 +38,8 @@ const AddDog = () => {
       gender: "",
       hdbApproved: false,
     },
-    onSubmit: (values) => {
-      addDog(values);
+    onSubmit: (values, { resetForm }) => {
+      addDog(values, resetForm);
     },
     validationSchema: object({
       name: string().required("Please enter name of dog."),
@@ -78,7 +81,7 @@ const AddDog = () => {
           helperText="e.g. 'dog10feb2021.jpg'"
         />
 
-        <FormControl error={formik.touched.gender && formik.errors.gender}>
+        <FormControl error={formik.touched.gender && !!formik.errors.gender}>
           <InputLabel shrink>Gender</InputLabel>
           <Select
             id="gender"
