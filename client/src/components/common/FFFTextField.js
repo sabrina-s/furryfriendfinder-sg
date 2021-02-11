@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, TextField } from "@material-ui/core";
+import { upperFirst } from "lodash";
 
 const useStyles = makeStyles({
   root: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
 const FFFTextField = ({
   id,
   type = "text",
-  placeholder = `${id.charAt(0).toUpperCase()}${id.slice(1)}`,
+  placeholder = upperFirst(id),
   onChange,
   value,
   error,
