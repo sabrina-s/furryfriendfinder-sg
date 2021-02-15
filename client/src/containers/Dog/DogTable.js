@@ -52,7 +52,15 @@ const DogTable = () => {
       <h2 className="fff__text_center">Manage dogs</h2>
 
       <TableContainer className={classes.table} component={Paper}>
-        <Table aria-label="simple table">
+        <Table data-testid="dog-table">
+          <colgroup>
+            <col width="15%" />
+            <col width="10%" />
+            <col width="40%" />
+            <col width="15%" />
+            <col width="10%" />
+            <col width="10%" />
+          </colgroup>
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
