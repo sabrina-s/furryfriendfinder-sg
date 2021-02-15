@@ -13,13 +13,31 @@ footer {
   font-size: 0.8em;
 }
 
+body {
+  color: #383838;
+  padding-bottom: 100px;
+}
+
 a {
   color: #6a3838;
 }
 
-body {
-  color: #383838;
-  padding-bottom: 100px;
+h1,
+h2 {
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+.fff__text_center {
+  text-align: center;
+}
+
+.fff__no_margin {
+  margin: 0;
 }
 
 .fff__flex {

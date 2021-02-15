@@ -51,7 +51,7 @@ const AddDog = () => {
 
   return (
     <div className="forms__container">
-      <div className="forms__title">Add a dog</div>
+      <h2 className="fff__text_center fff__no_margin">Add a dog</h2>
       <form
         onSubmit={formik.handleSubmit}
         className="forms__center"
