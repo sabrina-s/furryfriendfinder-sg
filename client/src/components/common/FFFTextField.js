@@ -20,6 +20,7 @@ const FFFTextField = ({
   value,
   error,
   helperText,
+  multiline = false,
 }) => {
   const classes = useStyles();
 
@@ -35,6 +36,8 @@ const FFFTextField = ({
       value={value}
       error={error}
       helperText={helperText}
+      multiline={multiline}
+      rowsMax={2}
     />
   );
 };

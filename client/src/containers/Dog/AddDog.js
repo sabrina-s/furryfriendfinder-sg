@@ -71,6 +71,7 @@ const AddDog = () => {
           value={formik.values.description}
           error={formik.touched.description && !!formik.errors.description}
           helperText={formik.touched.description && formik.errors.description}
+          multiline
         />
 
         <FFFTextField
