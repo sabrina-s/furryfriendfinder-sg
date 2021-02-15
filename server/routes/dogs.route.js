@@ -30,6 +30,15 @@ router.post("/", [auth.required, admin], async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  try {
+    const dog = await Dog.findById(req.params.id, ["-__v"]);
+    res.status(200).json(dog);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.put("/:id", [auth.required, admin], async (req, res, next) => {
   try {
     const dog = await Dog.findByIdAndUpdate(

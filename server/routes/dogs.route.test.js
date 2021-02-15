@@ -98,6 +98,22 @@ describe("Users", () => {
     });
   });
 
+  describe("GET /dogs/:id", () => {
+    it("should retrieve dog given valid id", async () => {
+      const dog = await Dog.findOne();
+      const expectedDog = {
+        name: dog.name,
+        description: dog.description,
+        available: dog.available,
+      };
+
+      const response = await request(app).get(`/dogs/${dog.id}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject(expectedDog);
+    });
+  });
+
   describe("PUT /dogs/:id", () => {
     it("should update dog attribute if authorised", async () => {
       const user = new User({
