@@ -1,46 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { REGISTER_API } from "../constants/api";
+import { LOGIN_API } from "../../constants/api";
 import { useFormik } from "formik";
-import { object, string, ref } from "yup";
+import { object, string } from "yup";
 import axios from "axios";
 import { Button } from "@material-ui/core";
-import "../stylesheets/forms.css";
-import FFFTextField from "../components/common/FFFTextField";
+import "../../stylesheets/forms.css";
+import FFFTextField from "../../components/common/FFFTextField";
+import FFFSnackbar from "../../components/common/FFFSnackbar";
 
-const RegisterPage = ({ setCurrentUser }) => {
+const LoginPage = ({ setCurrentUser }) => {
   const history = useHistory();
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleRegister = (values) => {
+  const handleLogin = (values) => {
     axios
-      .post(REGISTER_API, values)
+      .post(LOGIN_API, values, { withCredentials: true })
       .then((response) => {
         setCurrentUser(response.data.user);
         history.push("/");
       })
-      .catch(console.error);
+      .catch((err) => {
+        err.response && setErrorMessage(err.response.data.message);
+      });
   };
 
   const formik = useFormik({
     initialValues: {
       username: "",
       password: "",
-      confirmPassword: "",
     },
     onSubmit: (values) => {
-      handleRegister(values);
+      handleLogin(values);
     },
     validationSchema: object({
-      username: string().min(5).required("Please enter username."),
-      password: string().min(8).required("Please enter password."),
-      confirmPassword: string()
-        .oneOf([ref("password"), null], "Passwords must match.")
-        .required("Please confirm password."),
+      username: string().required("Please enter username."),
+      password: string().required("Please enter password."),
     }),
   });
 
   return (
-    <div className="register-page">
+    <div className="login-page">
       <form onSubmit={formik.handleSubmit} className="forms__center">
         <FFFTextField
           id="username"
@@ -59,26 +59,16 @@ const RegisterPage = ({ setCurrentUser }) => {
           helperText={formik.touched.password && formik.errors.password}
         />
 
-        <FFFTextField
-          id="confirmPassword"
-          type="password"
-          placeholder="Confirm Password"
-          onChange={formik.handleChange}
-          value={formik.values.confirmPassword}
-          error={
-            formik.touched.confirmPassword && !!formik.errors.confirmPassword
-          }
-          helperText={
-            formik.touched.confirmPassword && formik.errors.confirmPassword
-          }
-        />
-
         <Button color="primary" variant="contained" type="submit">
-          Register
+          Login
         </Button>
+
+        {errorMessage && (
+          <FFFSnackbar severity="error">{errorMessage}</FFFSnackbar>
+        )}
       </form>
     </div>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

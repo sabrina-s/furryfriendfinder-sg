@@ -2,10 +2,10 @@ import React from "react";
 import "./App.css";
 import Navbar from "./containers/Navbar/Navbar";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import RegisterPage from "./containers/RegisterPage";
-import LoginPage from "./containers/LoginPage";
-import AdminPage from "./containers/AdminPage";
-import DogPage from "./containers/DogPage";
+import RegisterPage from "./containers/User/RegisterPage";
+import LoginPage from "./containers/User/LoginPage";
+import AdminPage from "./containers/Admin/AdminPage";
+import DogPage from "./containers/Dog/DogPage";
 import { UserContext } from "./context/User";
 import { useCurrentUserHook } from "./hooks/useCurrentUserHook";
 

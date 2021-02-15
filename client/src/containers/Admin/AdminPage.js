@@ -1,5 +1,5 @@
 import React from "react";
-import AddDog from "../components/Dog/AddDog";
+import AddDog from "../Dog/AddDog";
 
 const AdminPage = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { object, string, boolean } from "yup";
-import FFFTextField from "../common/FFFTextField";
+import FFFTextField from "../../components/common/FFFTextField";
 import {
   Button,
   Checkbox,
@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import { DOGS_API } from "../../constants/api";
-import FFFSnackbar from "../common/FFFSnackbar";
+import FFFSnackbar from "../../components/common/FFFSnackbar";
 import "../../stylesheets/forms.css";
 
 const AddDog = () => {

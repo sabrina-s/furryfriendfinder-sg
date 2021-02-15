@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { DOGS_API } from "../constants/api";
-import DogCard from "../components/Dog/DogCard";
+import { DOGS_API } from "../../constants/api";
+import DogCard from "../../components/Dog/DogCard";
 import { makeStyles } from "@material-ui/core";
 import { sortBy } from "lodash";
 
