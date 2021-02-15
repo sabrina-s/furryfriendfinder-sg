@@ -97,4 +97,49 @@ describe("Users", () => {
       expect(response.status).toBe(500);
     });
   });
+
+  describe("PUT /dogs/:id", () => {
+    it("should update dog attribute if authorised", async () => {
+      const user = new User({
+        username: "username",
+        password: "password",
+        isAdmin: true,
+      });
+      await user.save();
+      const token = user.generateJWT();
+
+      const body = { available: false };
+      const dog = await Dog.findOne();
+
+      const response = await request(app)
+        .put(`/dogs/${dog._id}`)
+        .send(body)
+        .set("Cookie", `access_token=${token}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        message: `${dog.name} updated successfully!`,
+      });
+    });
+
+    it("should throw error if unauthorised", async () => {
+      const user = new User({
+        username: "username",
+        password: "password",
+        isAdmin: false,
+      });
+      await user.save();
+      const token = user.generateJWT();
+
+      const body = { available: false };
+      const dog = await Dog.findOne();
+
+      const response = await request(app)
+        .put(`/dogs/${dog._id}`)
+        .send(body)
+        .set("Cookie", `access_token=${token}`);
+
+      expect(response.status).toBe(403);
+    });
+  });
 });

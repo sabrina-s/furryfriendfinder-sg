@@ -30,4 +30,24 @@ router.post("/", [auth.required, admin], async (req, res, next) => {
   }
 });
 
+router.put("/:id", [auth.required, admin], async (req, res, next) => {
+  try {
+    const dog = await Dog.findByIdAndUpdate(
+      req.params.id,
+      _.pick(req.body, [
+        "name",
+        "gender",
+        "description",
+        "hdbApproved",
+        "available",
+        "image",
+      ])
+    );
+
+    res.status(200).json({ message: `${dog.name} updated successfully!` });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
