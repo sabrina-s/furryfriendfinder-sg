@@ -7,6 +7,7 @@ import {
   TableHead,
   TableRow,
   TableBody,
+  TablePagination,
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -23,6 +24,8 @@ const useStyles = makeStyles({
 const DogTable = () => {
   const classes = useStyles();
   const [dogs, setDogs] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     axios
@@ -34,6 +37,15 @@ const DogTable = () => {
       })
       .catch(console.error);
   }, []);
+
+  const handleChangePage = (e, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <React.Fragment>
@@ -52,22 +64,35 @@ const DogTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dogs.map((dog) => (
-              <TableRow key={dog._id}>
-                <TableCell component="th" scope="row">
-                  {dog.name}
-                </TableCell>
-                <TableCell align="left">{dog.gender}</TableCell>
-                <TableCell>{dog.description}</TableCell>
-                <TableCell>{dog.image}</TableCell>
-                <TableCell align="right">
-                  {dog.hdbApproved ? "✔️" : ""}
-                </TableCell>
-                <TableCell align="right">{dog.available ? "✔️" : ""}</TableCell>
-              </TableRow>
-            ))}
+            {dogs
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((dog) => (
+                <TableRow key={dog._id}>
+                  <TableCell component="th" scope="row">
+                    {dog.name}
+                  </TableCell>
+                  <TableCell align="left">{dog.gender}</TableCell>
+                  <TableCell>{dog.description}</TableCell>
+                  <TableCell>{dog.image}</TableCell>
+                  <TableCell align="right">
+                    {dog.hdbApproved ? "✔️" : ""}
+                  </TableCell>
+                  <TableCell align="right">
+                    {dog.available ? "✔️" : ""}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={dogs.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
       </TableContainer>
     </React.Fragment>
   );
