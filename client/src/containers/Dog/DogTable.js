@@ -15,11 +15,16 @@ import { sortBy } from "lodash";
 import { DOGS_API } from "../../constants/api";
 import FFFModal from "../../components/common/FFFModal";
 import UpdateDog from "./UpdateDog";
+import { Edit } from "@material-ui/icons";
 
 const useStyles = makeStyles({
   table: {
     width: "90%",
     margin: "25px auto",
+  },
+  editIcon: {
+    cursor: "pointer",
+    color: "#383838",
   },
 });
 
@@ -71,8 +76,9 @@ const DogTable = () => {
             <col width="10%" />
             <col width="40%" />
             <col width="15%" />
-            <col width="10%" />
-            <col width="10%" />
+            <col width="6%" />
+            <col width="6%" />
+            <col width="8%" />
           </colgroup>
           <TableHead>
             <TableRow>
@@ -80,29 +86,29 @@ const DogTable = () => {
               <TableCell>Gender</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Image</TableCell>
-              <TableCell align="right">HDB Approved?</TableCell>
-              <TableCell align="right">Available?</TableCell>
+              <TableCell>HDB Approved?</TableCell>
+              <TableCell>Available?</TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {dogs
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((dog) => (
-                <TableRow
-                  key={dog._id}
-                  onClick={() => displayDogModal(dog._id)}
-                >
+                <TableRow key={dog._id}>
                   <TableCell component="th" scope="row">
                     {dog.name}
                   </TableCell>
                   <TableCell align="left">{dog.gender}</TableCell>
                   <TableCell>{dog.description}</TableCell>
                   <TableCell>{dog.image}</TableCell>
-                  <TableCell align="right">
-                    {dog.hdbApproved ? "✔️" : ""}
-                  </TableCell>
-                  <TableCell align="right">
-                    {dog.available ? "✔️" : ""}
+                  <TableCell>{dog.hdbApproved ? "✔️" : ""}</TableCell>
+                  <TableCell>{dog.available ? "✔️" : ""}</TableCell>
+                  <TableCell
+                    align="right"
+                    onClick={() => displayDogModal(dog._id)}
+                  >
+                    <Edit className={classes.editIcon} />
                   </TableCell>
                 </TableRow>
               ))}
