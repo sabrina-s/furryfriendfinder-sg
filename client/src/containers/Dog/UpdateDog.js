@@ -15,12 +15,12 @@ import axios from "axios";
 import { DOGS_API } from "../../constants/api";
 import { object, string, boolean } from "yup";
 import FFFTextField from "../../components/common/FFFTextField";
-import { isEmpty } from "lodash";
+import { isEmpty, pick } from "lodash";
 
-const UpdateDog = ({ id, dog, handleClose }) => {
+const UpdateDog = ({ id, handleClose }) => {
   const [initValues, setInitValues] = useState({
     name: "",
-    gender: "male",
+    gender: "",
     description: "",
     image: "",
     available: false,
@@ -28,8 +28,21 @@ const UpdateDog = ({ id, dog, handleClose }) => {
   });
 
   useEffect(() => {
-    setInitValues(dog);
-  }, [dog]);
+    axios
+      .get(`${DOGS_API}/${id}`)
+      .then((response) => {
+        const currentDog = pick(response.data, [
+          "name",
+          "description",
+          "image",
+          "gender",
+          "hdbApproved",
+          "available",
+        ]);
+        setInitValues(currentDog);
+      })
+      .catch(console.error);
+  }, [id]);
 
   const updateDog = (values) => {
     axios

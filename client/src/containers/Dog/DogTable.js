@@ -13,7 +13,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { sortBy } from "lodash";
 import { DOGS_API } from "../../constants/api";
-import DogModal from "./DogModal";
+import FFFModal from "../../components/common/FFFModal";
+import UpdateDog from "./UpdateDog";
 
 const useStyles = makeStyles({
   table: {
@@ -28,6 +29,7 @@ const DogTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dogId, setDogId] = useState();
+  const [displayModal, setDisplayModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -51,6 +53,11 @@ const DogTable = () => {
 
   const displayDogModal = (id) => {
     setDogId(id);
+    setDisplayModal(true);
+  };
+
+  const handleClose = () => {
+    setDisplayModal(false);
   };
 
   return (
@@ -112,7 +119,9 @@ const DogTable = () => {
         />
       </TableContainer>
 
-      <DogModal id={dogId} />
+      <FFFModal isOpen={displayModal}>
+        <UpdateDog id={dogId} handleClose={handleClose} />
+      </FFFModal>
     </React.Fragment>
   );
 };
