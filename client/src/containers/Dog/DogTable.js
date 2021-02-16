@@ -10,12 +10,11 @@ import {
   TablePagination,
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { sortBy } from "lodash";
-import { DOGS_API } from "../../constants/api";
 import FFFModal from "../../components/common/FFFModal";
 import UpdateDog from "./UpdateDog";
 import { Edit } from "@material-ui/icons";
+import { getAllDogsSuccess, getAllDogs } from "../../redux/actions";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles({
   table: {
@@ -28,23 +27,18 @@ const useStyles = makeStyles({
   },
 });
 
-const DogTable = () => {
+const DogTable = (props) => {
   const classes = useStyles();
-  const [dogs, setDogs] = useState([]);
+
+  const { dogs } = props.dogs;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dogId, setDogId] = useState();
   const [displayModal, setDisplayModal] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(DOGS_API)
-      .then((response) => {
-        const dogs = response.data;
-        const sortedDogs = sortBy(dogs, [(dog) => !dog.available]);
-        setDogs(sortedDogs);
-      })
-      .catch(console.error);
+    props.getAllDogsSuccess();
+    props.getAllDogs();
   }, []);
 
   const handleChangePage = (e, newPage) => {
@@ -92,37 +86,40 @@ const DogTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dogs
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((dog) => (
-                <TableRow key={dog._id}>
-                  <TableCell component="th" scope="row">
-                    {dog.name}
-                  </TableCell>
-                  <TableCell align="left">{dog.gender}</TableCell>
-                  <TableCell>{dog.description}</TableCell>
-                  <TableCell>{dog.image}</TableCell>
-                  <TableCell>{dog.hdbApproved ? "✔️" : ""}</TableCell>
-                  <TableCell>{dog.available ? "✔️" : ""}</TableCell>
-                  <TableCell
-                    align="right"
-                    onClick={() => displayDogModal(dog._id)}
-                  >
-                    <Edit className={classes.editIcon} />
-                  </TableCell>
-                </TableRow>
-              ))}
+            {dogs &&
+              dogs
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((dog) => (
+                  <TableRow key={dog._id}>
+                    <TableCell component="th" scope="row">
+                      {dog.name}
+                    </TableCell>
+                    <TableCell align="left">{dog.gender}</TableCell>
+                    <TableCell>{dog.description}</TableCell>
+                    <TableCell>{dog.image}</TableCell>
+                    <TableCell>{dog.hdbApproved ? "✔️" : ""}</TableCell>
+                    <TableCell>{dog.available ? "✔️" : ""}</TableCell>
+                    <TableCell
+                      align="right"
+                      onClick={() => displayDogModal(dog._id)}
+                    >
+                      <Edit className={classes.editIcon} />
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={dogs.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        {dogs && (
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={dogs.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        )}
       </TableContainer>
 
       <FFFModal isOpen={displayModal}>
@@ -132,4 +129,15 @@ const DogTable = () => {
   );
 };
 
-export default DogTable;
+const mapStateToProps = (state) => {
+  return {
+    dogs: state.dogs,
+  };
+};
+
+const mapDispatchToProps = {
+  getAllDogsSuccess,
+  getAllDogs,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DogTable);
