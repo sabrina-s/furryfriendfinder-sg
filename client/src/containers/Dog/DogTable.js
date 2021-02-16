@@ -13,6 +13,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { sortBy } from "lodash";
 import { DOGS_API } from "../../constants/api";
+import DogModal from "./DogModal";
 
 const useStyles = makeStyles({
   table: {
@@ -26,6 +27,7 @@ const DogTable = () => {
   const [dogs, setDogs] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [dogId, setDogId] = useState();
 
   useEffect(() => {
     axios
@@ -45,6 +47,10 @@ const DogTable = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const displayDogModal = (id) => {
+    setDogId(id);
   };
 
   return (
@@ -75,7 +81,10 @@ const DogTable = () => {
             {dogs
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((dog) => (
-                <TableRow key={dog._id}>
+                <TableRow
+                  key={dog._id}
+                  onClick={() => displayDogModal(dog._id)}
+                >
                   <TableCell component="th" scope="row">
                     {dog.name}
                   </TableCell>
@@ -102,6 +111,8 @@ const DogTable = () => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </TableContainer>
+
+      <DogModal id={dogId} />
     </React.Fragment>
   );
 };
