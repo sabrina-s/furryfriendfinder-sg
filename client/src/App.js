@@ -8,12 +8,14 @@ import AdminPage from "./containers/Admin/AdminPage";
 import DogPage from "./containers/Dog/DogPage";
 import { UserContext } from "./context/User";
 import { useCurrentUserHook } from "./hooks/useCurrentUserHook";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   const { currentUser, setCurrentUser } = useCurrentUserHook();
 
   return (
-    <div>
+    <Provider store={store}>
       <UserContext.Provider value={currentUser}>
         <BrowserRouter>
           <Navbar setCurrentUser={setCurrentUser} />
@@ -32,7 +34,7 @@ function App() {
           </Switch>
         </BrowserRouter>
       </UserContext.Provider>
-    </div>
+    </Provider>
   );
 }
 
