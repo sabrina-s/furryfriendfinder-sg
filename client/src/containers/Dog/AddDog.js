@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import { object, string, boolean } from "yup";
 import FFFTextField from "../../components/common/FFFTextField";
@@ -12,22 +12,16 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import axios from "axios";
-import { DOGS_API } from "../../constants/api";
 import FFFSnackbar from "../../components/common/FFFSnackbar";
 import "../../stylesheets/forms.css";
+import { addDog } from "../../store/dogs";
+import { connect } from "react-redux";
 
-const AddDog = () => {
-  const [successMessage, setSuccessMessage] = useState("");
+const AddDog = (props) => {
+  const { message } = props;
 
   const addDog = (values, resetForm) => {
-    axios
-      .post(DOGS_API, values, { withCredentials: true })
-      .then((response) => {
-        setSuccessMessage(response.data.message);
-        resetForm();
-      })
-      .catch(console.error);
+    props.addDog(values).then(() => resetForm());
   };
 
   const formik = useFormik({
@@ -119,11 +113,20 @@ const AddDog = () => {
         </Button>
       </form>
 
-      {successMessage && (
-        <FFFSnackbar severity="success">{successMessage}</FFFSnackbar>
-      )}
+      {message && <FFFSnackbar severity="success">{message}</FFFSnackbar>}
     </div>
   );
 };
 
-export default AddDog;
+const mapStateToProps = (state) => {
+  return {
+    dogs: state.dogsReducer.dogs,
+    message: state.dogsReducer.message,
+  };
+};
+
+const mapDispatchToProps = {
+  addDog,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddDog);
