@@ -24,7 +24,7 @@ router.post("/", [auth.required, admin], async (req, res, next) => {
     );
     await dog.save();
 
-    res.status(200).json({ message: `${dog.name} added successfully!` });
+    res.status(200).json({ dog, message: `${dog.name} added successfully!` });
   } catch (error) {
     next(error);
   }

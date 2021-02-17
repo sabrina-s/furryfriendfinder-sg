@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { DOGS_API } from "../../constants/api";
+import React, { useEffect } from "react";
 import DogCard from "../../components/Dog/DogCard";
 import { makeStyles } from "@material-ui/core";
-import { sortBy } from "lodash";
+import { getAllDogs } from "../../store/dogs";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles({
   root: {
@@ -14,19 +13,12 @@ const useStyles = makeStyles({
   },
 });
 
-const DogPage = () => {
+const DogPage = (props) => {
   const classes = useStyles();
-  const [dogs, setDogs] = useState([]);
+  const { dogs } = props;
 
   useEffect(() => {
-    axios
-      .get(DOGS_API)
-      .then((response) => {
-        const dogs = response.data;
-        const sortedDogs = sortBy(dogs, [(dog) => !dog.available]);
-        setDogs(sortedDogs);
-      })
-      .catch(console.error);
+    props.getAllDogs();
   }, []);
 
   return (
@@ -38,4 +30,14 @@ const DogPage = () => {
   );
 };
 
-export default DogPage;
+const mapStateToProps = (state) => {
+  return {
+    dogs: state.dogsReducer.dogs,
+  };
+};
+
+const mapDispatchToProps = {
+  getAllDogs,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DogPage);

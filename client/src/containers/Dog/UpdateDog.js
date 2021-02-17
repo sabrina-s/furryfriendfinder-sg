@@ -16,8 +16,11 @@ import { DOGS_API } from "../../constants/api";
 import { object, string, boolean } from "yup";
 import FFFTextField from "../../components/common/FFFTextField";
 import { isEmpty, pick } from "lodash";
+import { updateDog } from "../../store/dogs";
+import { connect } from "react-redux";
 
-const UpdateDog = ({ id, handleClose }) => {
+const UpdateDog = (props) => {
+  const { id, handleClose } = props;
   const [initValues, setInitValues] = useState({
     name: "",
     gender: "",
@@ -45,12 +48,7 @@ const UpdateDog = ({ id, handleClose }) => {
   }, [id]);
 
   const updateDog = (values) => {
-    axios
-      .put(`${DOGS_API}/${id}`, values, {
-        withCredentials: true,
-      })
-      .then((response) => console.log(response.data.message))
-      .catch(console.error);
+    props.updateDog(id, values);
   };
 
   const handleFormSubmit = () => {
@@ -162,4 +160,15 @@ const UpdateDog = ({ id, handleClose }) => {
   );
 };
 
-export default UpdateDog;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    dogs: state.dogsReducer.dogs,
+    ownProps,
+  };
+};
+
+const mapDispatchToProps = {
+  updateDog,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateDog);

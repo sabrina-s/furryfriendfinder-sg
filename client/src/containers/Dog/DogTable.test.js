@@ -1,9 +1,15 @@
 import DogTable from "./DogTable";
 import { render, screen } from "@testing-library/react";
+import { Provider } from "react-redux";
+import store from "../../store/store";
 
 describe("DogTable", () => {
   it("should render dog table with headers", async () => {
-    render(<DogTable />);
+    render(
+      <Provider store={store}>
+        <DogTable />
+      </Provider>
+    );
 
     const table = screen.getByTestId("dog-table");
     const nameHeader = screen.getByText("Name");

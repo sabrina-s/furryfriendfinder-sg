@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
@@ -12,12 +12,9 @@ const useStyles = makeStyles({
 
 const FFFSnackbar = ({ severity, children }) => {
   const classes = useStyles();
+  const [open, setOpen] = useState(true);
 
-  const [open, setOpen] = React.useState(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => setOpen(false);
 
   return (
     <Snackbar
