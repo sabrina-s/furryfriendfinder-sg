@@ -1,13 +1,12 @@
 import axios from "axios";
 import { DOGS_API } from "../constants/api";
 import { sortBy } from "lodash";
+import { showSnackbar, clearSnackbar } from "./alerts";
 
 // action types
 const GET_ALL_DOGS_SUCCESS = "GET_ALL_DOGS_SUCCESS";
 const GET_ALL_DOGS_FAILURE = "GET_ALL_DOGS_FAILURE";
 const ADD_DOG_SUCCESS = "ADD_DOG_SUCCESS";
-const UPDATE_DOG_SUCCESS = "UPDATE_DOG_SUCCESS";
-const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 
 // action creators
 const getAllDogsSuccess = (dogs) => ({
@@ -30,10 +29,9 @@ export const getAllDogs = () => {
   };
 };
 
-const addDogSuccess = (dog, message) => ({
+const addDogSuccess = (dog) => ({
   type: ADD_DOG_SUCCESS,
   dog: dog,
-  message: message,
 });
 
 export const addDog = (values) => {
@@ -43,21 +41,18 @@ export const addDog = (values) => {
       .then((response) => {
         const dog = response.data.dog;
         const message = response.data.message;
-        dispatch(addDogSuccess(dog, message));
+        dispatch(addDogSuccess(dog));
+        dispatch(showSnackbar(message));
+
         // TOFIX: this is hacky
         // required because `message` for FFFSnackbar in AddDog does not clear out
         setTimeout(() => {
-          dispatch(clearMessage());
+          dispatch(clearSnackbar());
         }, 6000);
       })
       .catch(console.error);
   };
 };
-
-const updateDogSuccess = (message) => ({
-  type: UPDATE_DOG_SUCCESS,
-  message,
-});
 
 export const updateDog = (id, values) => {
   return (dispatch) => {
@@ -68,25 +63,20 @@ export const updateDog = (id, values) => {
       .then((response) => {
         const message = response.data.message;
         dispatch(getAllDogs());
-        dispatch(updateDogSuccess(message));
+        dispatch(showSnackbar(message));
+
         // TOFIX: same as above
         setTimeout(() => {
-          dispatch(clearMessage());
+          dispatch(clearSnackbar());
         }, 6000);
       })
       .catch(console.error);
   };
 };
 
-const clearMessage = () => ({
-  type: CLEAR_MESSAGE,
-  message: "",
-});
-
 // reducer
 const initialState = {
   dogs: [],
-  message: "",
 };
 
 function dogsReducer(state = initialState, action) {
@@ -100,17 +90,6 @@ function dogsReducer(state = initialState, action) {
       return {
         ...state,
         dogs: [...state.dogs, action.dog],
-        message: action.message,
-      };
-    case UPDATE_DOG_SUCCESS:
-      return {
-        ...state,
-        message: action.message,
-      };
-    case CLEAR_MESSAGE:
-      return {
-        ...state,
-        message: "",
       };
     default:
       return state;

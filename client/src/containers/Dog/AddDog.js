@@ -18,8 +18,6 @@ import { addDog } from "../../store/dogs";
 import { connect } from "react-redux";
 
 const AddDog = (props) => {
-  const { message } = props;
-
   const addDog = (values, resetForm) => {
     props.addDog(values).then(() => resetForm());
   };
@@ -112,8 +110,6 @@ const AddDog = (props) => {
           Create
         </Button>
       </form>
-
-      {message && <FFFSnackbar severity="success">{message}</FFFSnackbar>}
     </div>
   );
 };
@@ -121,7 +117,6 @@ const AddDog = (props) => {
 const mapStateToProps = (state) => {
   return {
     dogs: state.dogsReducer.dogs,
-    message: state.dogsReducer.message,
   };
 };
 

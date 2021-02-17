@@ -10,6 +10,7 @@ import { UserContext } from "./context/User";
 import { useCurrentUserHook } from "./hooks/useCurrentUserHook";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import Alerts from "./components/Alerts";
 
 function App() {
   const { currentUser, setCurrentUser } = useCurrentUserHook();
@@ -18,6 +19,7 @@ function App() {
     <Provider store={store}>
       <UserContext.Provider value={currentUser}>
         <BrowserRouter>
+          <Alerts />
           <Navbar setCurrentUser={setCurrentUser} />
           <Switch>
             <Route path="/" exact component={DogPage} />
