@@ -6,6 +6,7 @@ import { sortBy } from "lodash";
 const GET_ALL_DOGS_SUCCESS = "GET_ALL_DOGS_SUCCESS";
 const GET_ALL_DOGS_FAILURE = "GET_ALL_DOGS_FAILURE";
 const ADD_DOG_SUCCESS = "ADD_DOG_SUCCESS";
+const UPDATE_DOG_SUCCESS = "UPDATE_DOG_SUCCESS";
 const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 
 // action creators
@@ -53,6 +54,30 @@ export const addDog = (values) => {
   };
 };
 
+const updateDogSuccess = (message) => ({
+  type: UPDATE_DOG_SUCCESS,
+  message,
+});
+
+export const updateDog = (id, values) => {
+  return (dispatch) => {
+    return axios
+      .put(`${DOGS_API}/${id}`, values, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        const message = response.data.message;
+        dispatch(getAllDogs());
+        dispatch(updateDogSuccess(message));
+        // TOFIX: same as above
+        setTimeout(() => {
+          dispatch(clearMessage());
+        }, 6000);
+      })
+      .catch(console.error);
+  };
+};
+
 const clearMessage = () => ({
   type: CLEAR_MESSAGE,
   message: "",
@@ -75,6 +100,11 @@ function dogsReducer(state = initialState, action) {
       return {
         ...state,
         dogs: [...state.dogs, action.dog],
+        message: action.message,
+      };
+    case UPDATE_DOG_SUCCESS:
+      return {
+        ...state,
         message: action.message,
       };
     case CLEAR_MESSAGE:
