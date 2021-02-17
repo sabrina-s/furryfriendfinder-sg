@@ -13,7 +13,7 @@ import React, { useState, useEffect } from "react";
 import FFFModal from "../../components/common/FFFModal";
 import UpdateDog from "./UpdateDog";
 import { Edit } from "@material-ui/icons";
-import { getAllDogs } from "../../redux/actions";
+import { getAllDogs } from "../../store/dogs";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles({

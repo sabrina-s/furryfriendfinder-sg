@@ -9,7 +9,7 @@ import DogPage from "./containers/Dog/DogPage";
 import { UserContext } from "./context/User";
 import { useCurrentUserHook } from "./hooks/useCurrentUserHook";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import store from "./store/store";
 
 function App() {
   const { currentUser, setCurrentUser } = useCurrentUserHook();

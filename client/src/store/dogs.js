@@ -1,10 +1,13 @@
 import axios from "axios";
 import { DOGS_API } from "../constants/api";
 import { sortBy } from "lodash";
-import * as actions from "./actionTypes";
 
+// action types
+const GET_ALL_DOGS_SUCCESS = "GET_ALL_DOGS_SUCCESS";
+
+// action creators
 export const getAllDogsSuccess = (dogs) => ({
-  type: actions.GET_ALL_DOGS_SUCCESS,
+  type: GET_ALL_DOGS_SUCCESS,
   dogs,
 });
 
@@ -19,3 +22,23 @@ export const getAllDogs = () => {
       .catch(console.error);
   };
 };
+
+// reducer
+const initialState = {
+  dogs: [],
+  message: "",
+};
+
+function dogsReducer(state = initialState, action) {
+  switch (action.type) {
+    case GET_ALL_DOGS_SUCCESS:
+      return {
+        ...state,
+        dogs: action.dogs,
+      };
+    default:
+      return state;
+  }
+}
+
+export default dogsReducer;
