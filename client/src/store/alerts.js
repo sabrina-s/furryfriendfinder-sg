@@ -9,10 +9,19 @@ export const showSnackbar = (message, severity) => ({
   severity,
 });
 
-export const clearSnackbar = () => ({
+const clearSnackbarSucess = () => ({
   type: CLEAR_SNACKBAR,
   message: "",
 });
+
+export const clearSnackbar = () => {
+  // TOFIX: this is hacky
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(clearSnackbarSucess());
+    }, 6000);
+  };
+};
 
 // reducer
 const initialState = {

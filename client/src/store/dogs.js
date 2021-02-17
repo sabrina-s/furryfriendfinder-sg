@@ -43,12 +43,7 @@ export const addDog = (values) => {
         const message = response.data.message;
         dispatch(addDogSuccess(dog));
         dispatch(showSnackbar(message));
-
-        // TOFIX: this is hacky
-        // required because `message` for FFFSnackbar in AddDog does not clear out
-        setTimeout(() => {
-          dispatch(clearSnackbar());
-        }, 6000);
+        dispatch(clearSnackbar());
       })
       .catch(console.error);
   };
@@ -64,11 +59,7 @@ export const updateDog = (id, values) => {
         const message = response.data.message;
         dispatch(getAllDogs());
         dispatch(showSnackbar(message));
-
-        // TOFIX: same as above
-        setTimeout(() => {
-          dispatch(clearSnackbar());
-        }, 6000);
+        dispatch(clearSnackbar());
       })
       .catch(console.error);
   };
