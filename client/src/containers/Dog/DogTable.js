@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 const DogTable = (props) => {
   const classes = useStyles();
 
-  const { dogs } = props.dogs;
+  const { dogs } = props;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dogId, setDogId] = useState();
@@ -130,7 +130,7 @@ const DogTable = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    dogs: state.dogs,
+    dogs: state.dogsReducer.dogs,
   };
 };
 
