@@ -13,7 +13,7 @@ import React, { useState, useEffect } from "react";
 import FFFModal from "../../components/common/FFFModal";
 import UpdateDog from "./UpdateDog";
 import { Edit } from "@material-ui/icons";
-import { getAllDogsSuccess, getAllDogs } from "../../redux/actions";
+import { getAllDogs } from "../../redux/actions";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles({
@@ -37,7 +37,6 @@ const DogTable = (props) => {
   const [displayModal, setDisplayModal] = useState(false);
 
   useEffect(() => {
-    props.getAllDogsSuccess();
     props.getAllDogs();
   }, []);
 
@@ -136,7 +135,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  getAllDogsSuccess,
   getAllDogs,
 };
 
