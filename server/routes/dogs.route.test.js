@@ -5,7 +5,28 @@ const Dog = require("../models/dog.model");
 const User = require("../models/user.model");
 
 describe("Users", () => {
-  beforeAll(async () => await dbHandler.connect());
+  let adminToken;
+  let userToken;
+
+  beforeAll(async () => {
+    await dbHandler.connect();
+
+    const adminUser = new User({
+      username: "admin-username",
+      password: "password",
+      isAdmin: true,
+    });
+    await adminUser.save();
+    adminToken = adminUser.generateJWT();
+
+    const user = new User({
+      username: "username",
+      password: "password",
+      isAdmin: false,
+    });
+    await user.save();
+    userToken = user.generateJWT();
+  });
   afterEach(async () => await dbHandler.clearDatabase());
   afterAll(async () => await dbHandler.closeDatabase());
   beforeEach(async () => {
@@ -40,14 +61,6 @@ describe("Users", () => {
 
   describe("POST /dogs", () => {
     it("should create new dog if authorised and fields are valid", async () => {
-      const user = new User({
-        username: "username",
-        password: "password",
-        isAdmin: true,
-      });
-      await user.save();
-      const token = user.generateJWT();
-
       const dog = {
         name: "dog",
         gender: "female",
@@ -59,20 +72,12 @@ describe("Users", () => {
       const response = await request(app)
         .post("/dogs")
         .send(dog)
-        .set("Cookie", `access_token=${token}`);
+        .set("Cookie", `access_token=${adminToken}`);
 
       expect(response.status).toBe(200);
     });
 
     it("should throw error if unauthorised even if fields are valid", async () => {
-      const user = new User({
-        username: "username",
-        password: "password",
-        isAdmin: false,
-      });
-      await user.save();
-      const token = user.generateJWT();
-
       const dog = {
         name: "dog",
         gender: "female",
@@ -84,7 +89,7 @@ describe("Users", () => {
       const response = await request(app)
         .post("/dogs")
         .send(dog)
-        .set("Cookie", `access_token=${token}`);
+        .set("Cookie", `access_token=${userToken}`);
 
       expect(response.status).toBe(403);
     });
@@ -116,21 +121,13 @@ describe("Users", () => {
 
   describe("PUT /dogs/:id", () => {
     it("should update dog attribute if authorised", async () => {
-      const user = new User({
-        username: "username",
-        password: "password",
-        isAdmin: true,
-      });
-      await user.save();
-      const token = user.generateJWT();
-
       const body = { available: false };
       const dog = await Dog.findOne();
 
       const response = await request(app)
         .put(`/dogs/${dog._id}`)
         .send(body)
-        .set("Cookie", `access_token=${token}`);
+        .set("Cookie", `access_token=${adminToken}`);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -139,21 +136,38 @@ describe("Users", () => {
     });
 
     it("should throw error if unauthorised", async () => {
-      const user = new User({
-        username: "username",
-        password: "password",
-        isAdmin: false,
-      });
-      await user.save();
-      const token = user.generateJWT();
-
       const body = { available: false };
       const dog = await Dog.findOne();
 
       const response = await request(app)
         .put(`/dogs/${dog._id}`)
         .send(body)
-        .set("Cookie", `access_token=${token}`);
+        .set("Cookie", `access_token=${userToken}`);
+
+      expect(response.status).toBe(403);
+    });
+  });
+
+  describe("DELETE /dogs/:id", () => {
+    it("should update dog attribute if authorised", async () => {
+      const dog = await Dog.findOne();
+
+      const response = await request(app)
+        .delete(`/dogs/${dog._id}`)
+        .set("Cookie", `access_token=${adminToken}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        message: `${dog.name} deleted successfully!`,
+      });
+    });
+
+    it("should throw error if unauthorised", async () => {
+      const dog = await Dog.findOne();
+
+      const response = await request(app)
+        .delete(`/dogs/${dog._id}`)
+        .set("Cookie", `access_token=${userToken}`);
 
       expect(response.status).toBe(403);
     });

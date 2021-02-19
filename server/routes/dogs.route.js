@@ -59,4 +59,14 @@ router.put("/:id", [auth.required, admin], async (req, res, next) => {
   }
 });
 
+router.delete("/:id", [auth.required, admin], async (req, res, next) => {
+  try {
+    const dog = await Dog.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({ message: `${dog.name} deleted successfully!` });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
