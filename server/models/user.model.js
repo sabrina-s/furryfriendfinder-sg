@@ -28,7 +28,9 @@ function hashPassword(password) {
 }
 
 userSchema.pre("save", async function (next) {
-  this.password = await hashPassword(this.password);
+  if (this.isModified("password")) {
+    this.password = await hashPassword(this.password);
+  }
   next();
 });
 
