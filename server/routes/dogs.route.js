@@ -50,7 +50,8 @@ router.put("/:id", [auth.required, admin], async (req, res, next) => {
         "hdbApproved",
         "available",
         "image",
-      ])
+      ]),
+      { new: true }
     );
 
     res.status(200).json({ message: `${dog.name} updated successfully!` });
