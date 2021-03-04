@@ -7,16 +7,9 @@ app.use(cookieParser());
 
 // CORS
 const cors = require("cors");
-const origin = () => {
-  if (process.env.NODE_ENV === "production") {
-    return "https://furryfriendfinder-sg.netlify.app";
-  } else {
-    return "http://localhost:3000";
-  }
-};
 app.use(
   cors({
-    origin: origin(),
+    origin: process.env.ORIGIN_URL || "http://localhost:3000",
     credentials: true,
   })
 );
