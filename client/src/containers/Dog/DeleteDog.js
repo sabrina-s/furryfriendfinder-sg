@@ -14,7 +14,7 @@ const DeleteDog = (props) => {
   return (
     <DialogContent>
       <h2 className="fff__text_center fff__no_margin">Are you sure?</h2>
-      <p>This will deleted the selected dog.</p>
+      <p>This will delete the selected dog.</p>
 
       <DialogActions>
         <Button onClick={handleClose} color="primary">
