@@ -12,7 +12,8 @@ import {
 import React, { useState, useEffect } from "react";
 import FFFModal from "../../components/common/FFFModal";
 import UpdateDog from "./UpdateDog";
-import { Edit } from "@material-ui/icons";
+import DeleteDog from "./DeleteDog";
+import { Delete, Edit } from "@material-ui/icons";
 import { getAllDogs } from "../../store/dogs";
 import { connect } from "react-redux";
 
@@ -21,9 +22,10 @@ const useStyles = makeStyles({
     width: "90%",
     margin: "25px auto",
   },
-  editIcon: {
+  icons: {
     cursor: "pointer",
     color: "#383838",
+    marginLeft: "5px",
   },
 });
 
@@ -34,7 +36,8 @@ const DogTable = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dogId, setDogId] = useState();
-  const [displayModal, setDisplayModal] = useState(false);
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
   useEffect(() => {
     props.getAllDogs();
@@ -49,13 +52,19 @@ const DogTable = (props) => {
     setPage(0);
   };
 
-  const displayDogModal = (id) => {
+  const displayUpdateModal = (id) => {
     setDogId(id);
-    setDisplayModal(true);
+    setIsUpdateModalVisible(true);
+  };
+
+  const displayDeleteModal = (id) => {
+    setDogId(id);
+    setIsDeleteModalVisible(true);
   };
 
   const handleClose = () => {
-    setDisplayModal(false);
+    setIsUpdateModalVisible(false);
+    setIsDeleteModalVisible(false);
   };
 
   return (
@@ -98,11 +107,15 @@ const DogTable = (props) => {
                     <TableCell>{dog.image}</TableCell>
                     <TableCell>{dog.hdbApproved ? "✔️" : ""}</TableCell>
                     <TableCell>{dog.available ? "✔️" : ""}</TableCell>
-                    <TableCell
-                      align="right"
-                      onClick={() => displayDogModal(dog._id)}
-                    >
-                      <Edit className={classes.editIcon} />
+                    <TableCell align="right">
+                      <Edit
+                        className={classes.icons}
+                        onClick={() => displayUpdateModal(dog._id)}
+                      />
+                      <Delete
+                        className={classes.icons}
+                        onClick={() => displayDeleteModal(dog._id)}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -121,8 +134,12 @@ const DogTable = (props) => {
         )}
       </TableContainer>
 
-      <FFFModal isOpen={displayModal}>
+      <FFFModal isOpen={isUpdateModalVisible}>
         <UpdateDog id={dogId} handleClose={handleClose} />
+      </FFFModal>
+
+      <FFFModal isOpen={isDeleteModalVisible}>
+        <DeleteDog id={dogId} handleClose={handleClose} />
       </FFFModal>
     </React.Fragment>
   );

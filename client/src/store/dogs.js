@@ -65,6 +65,20 @@ export const updateDog = (id, values) => {
   };
 };
 
+export const deleteDog = (id) => {
+  return (dispatch) => {
+    return axios
+      .delete(`${DOGS_API}/${id}`, { withCredentials: true })
+      .then((response) => {
+        const message = response.data.message;
+        dispatch(getAllDogs());
+        dispatch(showSnackbar(message));
+        dispatch(clearSnackbar());
+      })
+      .catch(console.error);
+  };
+};
+
 // reducer
 const initialState = {
   dogs: [],
