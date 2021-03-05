@@ -14,6 +14,16 @@ app.use(
   })
 );
 
+// FILE UPLOADS
+app.use("/uploads", express.static("uploads"));
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
 // Routes
 app.get("/", (req, res) => {
   res.send("Hello from Express");
