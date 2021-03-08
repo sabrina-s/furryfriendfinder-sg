@@ -104,7 +104,8 @@ const DogTable = (props) => {
                     </TableCell>
                     <TableCell align="left">{dog.gender}</TableCell>
                     <TableCell>{dog.description}</TableCell>
-                    <TableCell>{dog.image}</TableCell>
+                    {/* <TableCell>{dog.image}</TableCell> */}
+                    <TableCell>-</TableCell>
                     <TableCell>{dog.hdbApproved ? "✔️" : ""}</TableCell>
                     <TableCell>{dog.available ? "✔️" : ""}</TableCell>
                     <TableCell align="right">

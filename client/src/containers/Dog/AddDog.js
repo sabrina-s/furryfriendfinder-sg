@@ -12,7 +12,6 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import FFFSnackbar from "../../components/common/FFFSnackbar";
 import "../../stylesheets/forms.css";
 import { addDog } from "../../store/dogs";
 import { connect } from "react-redux";
@@ -26,11 +25,12 @@ const AddDog = (props) => {
     initialValues: {
       name: "",
       description: "",
-      image: "",
+      image: null,
       gender: "",
       hdbApproved: false,
     },
     onSubmit: (values, { resetForm }) => {
+      console.log("values before manipulating", values);
       addDog(values, resetForm);
     },
     validationSchema: object({
@@ -45,6 +45,7 @@ const AddDog = (props) => {
     <div className="forms__container">
       <h2 className="fff__text_center fff__no_margin">Add a dog</h2>
       <form
+        formEncType="multipart/form-data" // for images to work with Multer
         onSubmit={formik.handleSubmit}
         className="forms__center"
         data-testid="add-dog-form"
@@ -66,12 +67,22 @@ const AddDog = (props) => {
           multiline
         />
 
-        <FFFTextField
+        {/* <FFFTextField
           id="image"
           placeholder="Image name"
           onChange={formik.handleChange}
           value={formik.values.image}
           helperText="e.g. 'dog10feb2021.jpg'"
+        /> */}
+
+        <input
+          id="image"
+          name="image"
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          onChange={(e) =>
+            formik.setFieldValue("image", e.currentTarget.files[0])
+          }
         />
 
         <FormControl error={formik.touched.gender && !!formik.errors.gender}>
