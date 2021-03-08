@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Navbar from "./containers/Navbar/Navbar";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import RegisterPage from "./containers/User/RegisterPage";
 import LoginPage from "./containers/User/LoginPage";
 import AdminPage from "./containers/Admin/AdminPage";
@@ -31,8 +31,11 @@ function App() {
               path="/login"
               render={() => <LoginPage setCurrentUser={setCurrentUser} />}
             />
-            {/* TODO: Protect /admin route from non admins */}
-            <Route path="/admin" render={() => <AdminPage />} />
+            {currentUser && currentUser.isAdmin ? (
+              <Route path="/admin" render={() => <AdminPage />} />
+            ) : (
+              <Redirect to="/" />
+            )}
           </Switch>
         </BrowserRouter>
       </UserContext.Provider>
