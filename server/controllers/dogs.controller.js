@@ -3,7 +3,10 @@ const { pick } = require("lodash");
 
 const getDogs = async (req, res, next) => {
   try {
-    const dogs = await Dog.find({});
+    const nameQuery = req.query.name;
+    const dogs = nameQuery
+      ? await Dog.find({ name: { $regex: nameQuery, $options: "i" } }).exec()
+      : await Dog.find({});
     res.status(200).json(dogs);
   } catch (err) {
     next(err);

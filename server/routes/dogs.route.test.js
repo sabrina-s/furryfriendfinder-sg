@@ -172,4 +172,28 @@ describe("Users", () => {
       expect(response.status).toBe(403);
     });
   });
+
+  describe("GET /dogs?name=bernie", () => {
+    it("should return dogs with 'bernie' in the name", async () => {
+      const query = "bernie";
+
+      const response = await request(app).get(`/dogs?name=${query}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(1);
+      expect(response.body[0].name).toEqual("Bernie");
+    });
+  });
+
+  describe("GET /dogs?name=bern", () => {
+    it("should return dogs with 'bern' in the name", async () => {
+      const query = "bern";
+
+      const response = await request(app).get(`/dogs?name=${query}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(1);
+      expect(response.body[0].name).toEqual("Bernie");
+    });
+  });
 });
