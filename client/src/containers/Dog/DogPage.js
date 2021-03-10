@@ -40,9 +40,8 @@ const DogPage = (props) => {
         <Search />
       </div>
       <div className={classes.dogs}>
-        {dogs.map((dog) => (
-          <DogCard dog={dog} key={dog._id} />
-        ))}
+        {dogs && dogs.map((dog) => <DogCard dog={dog} key={dog._id} />)}
+        {dogs.length < 1 && <p>No dogs found with the name "{query}".</p>}
       </div>
     </div>
   );
