@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     paddingTop: "10px",
+    overflow: "hidden",
+    display: "-webkit-box",
+    boxOrient: "vertical",
+    lineClamp: 3,
   },
   cover: {
     maxHeight: "250px",
