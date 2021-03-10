@@ -3,10 +3,9 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
-    cb(null, "./uploads");
+    cb(null, "../client/public/assets");
   },
   filename: function (req, file, cb) {
-    console.log("file===== ", file);
     cb(null, "dog" + "-" + Date.now() + path.extname(file.originalname));
   },
 });

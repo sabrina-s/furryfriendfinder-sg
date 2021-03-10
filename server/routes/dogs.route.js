@@ -24,10 +24,10 @@ router.post(
       "available",
     ]);
 
-    const imageExists = await req.file;
+    const imageExists = req.file;
 
     if (imageExists) {
-      dogProps["image"] = req.file.path;
+      dogProps["image"] = req.file.filename;
     }
 
     try {
