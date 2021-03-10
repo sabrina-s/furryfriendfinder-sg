@@ -36,7 +36,7 @@ const DogPage = (props) => {
   return (
     <div className="hiii">
       <div className={classes.search}>
-        <FFFTextField onChange={(e) => setQuery(e.target.value)} />
+        <FFFTextField onChange={(e) => setQuery(e.target.value.trim())} />
         <Search />
       </div>
       <div className={classes.dogs}>
