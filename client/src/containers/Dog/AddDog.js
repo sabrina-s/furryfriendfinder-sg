@@ -12,7 +12,6 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import FFFSnackbar from "../../components/common/FFFSnackbar";
 import "../../stylesheets/forms.css";
 import { addDog } from "../../store/dogs";
 import { connect } from "react-redux";

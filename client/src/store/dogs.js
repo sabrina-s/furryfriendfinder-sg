@@ -29,6 +29,16 @@ export const getAllDogs = () => {
   };
 };
 
+export const searchDogs = (query) => {
+  return (dispatch) => {
+    return axios
+      .get(`${DOGS_API}?name=${query}`)
+      .then((response) => sortBy(response.data, [(dog) => !dog.available]))
+      .then((dogs) => dispatch(getAllDogsSuccess(dogs)))
+      .catch((error) => dispatch(getAllDogsFailure(error)));
+  };
+};
+
 const addDogSuccess = (dog) => ({
   type: ADD_DOG_SUCCESS,
   dog: dog,
