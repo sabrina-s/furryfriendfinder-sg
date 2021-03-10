@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "10px",
   },
   cover: {
-    maxHeight: "400px",
+    maxHeight: "250px",
   },
 }));
 
