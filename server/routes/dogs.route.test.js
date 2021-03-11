@@ -42,7 +42,7 @@ describe("Users", () => {
         name: "Spangle",
         gender: "female",
         description: "spongo",
-        hdbApproved: true,
+        hdbApproved: false,
         available: true,
       },
     ];
@@ -194,6 +194,27 @@ describe("Users", () => {
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(1);
       expect(response.body[0].name).toEqual("Bernie");
+    });
+  });
+
+  describe("GET /dogs?hdbApprovedOnly=true", () => {
+    it("should return only HDB-approved dogs", async () => {
+      const response = await request(app).get(`/dogs?hdbApprovedOnly=true`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(1);
+    });
+  });
+
+  describe("GET /dogs?name=spang&hdbApprovedOnly=false", () => {
+    it("should return all matched dogs regardless of HDB approval status", async () => {
+      const response = await request(app).get(
+        `/dogs?name=spang&hdbApprovedOnly=false`
+      );
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(1);
+      expect(response.body[0].name).toEqual("Spangle");
     });
   });
 });

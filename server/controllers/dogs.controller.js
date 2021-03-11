@@ -1,12 +1,21 @@
 const Dog = require("../models/dog.model");
-const { pick } = require("lodash");
+const { pick, isEmpty } = require("lodash");
 
 const getDogs = async (req, res, next) => {
   try {
-    const nameQuery = req.query.name;
-    const dogs = nameQuery
-      ? await Dog.find({ name: { $regex: nameQuery, $options: "i" } }).exec()
+    const query = {};
+
+    if (req.query.name) {
+      query["name"] = { $regex: req.query.name, $options: "i" };
+    }
+    if (req.query.hdbApprovedOnly === "true") {
+      query["hdbApproved"] = req.query.hdbApprovedOnly;
+    }
+
+    const dogs = !isEmpty(query)
+      ? await Dog.find(query).exec()
       : await Dog.find({});
+
     res.status(200).json(dogs);
   } catch (err) {
     next(err);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DogCard from "../../components/Dog/DogCard";
-import { makeStyles } from "@material-ui/core";
+import { Checkbox, FormControlLabel, makeStyles } from "@material-ui/core";
 import { getAllDogs, searchDogs } from "../../store/dogs";
 import { connect } from "react-redux";
 import FFFTextField from "../../components/common/FFFTextField";
@@ -13,9 +13,10 @@ const useStyles = makeStyles({
     padding: "0 100px",
     justifyContent: "center",
   },
-  search: {
+  filter: {
     display: "flex",
-    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
     paddingTop: "20px",
   },
 });
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
 const DogPage = (props) => {
   const classes = useStyles();
   const { dogs, getAllDogs, searchDogs } = props;
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState({ name: "", hdbApprovedOnly: false });
 
   useEffect(() => {
     getAllDogs();
@@ -33,17 +34,43 @@ const DogPage = (props) => {
     searchDogs(query);
   }, [searchDogs, query]);
 
+  const handleNameChange = (e) => {
+    setQuery({ ...query, name: e.target.value.trim() });
+  };
+
+  const handleHdbOnlyChange = (e) => {
+    setQuery({
+      ...query,
+      hdbApprovedOnly: !query.hdbApprovedOnly,
+    });
+  };
+
   return (
-    <div className="hiii">
-      <div className={classes.search}>
-        <FFFTextField onChange={(e) => setQuery(e.target.value.trim())} />
-        <Search />
+    <>
+      <div className={classes.filter}>
+        <div>
+          <FFFTextField onChange={handleNameChange} />
+          <Search />
+        </div>
+        <div>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="hdbApproved"
+                checked={query.hdbApprovedOnly}
+                value={query.hdbApprovedOnly}
+                onChange={handleHdbOnlyChange}
+              />
+            }
+            label="Only HDB approved"
+          />
+        </div>
       </div>
       <div className={classes.dogs}>
         {dogs && dogs.map((dog) => <DogCard dog={dog} key={dog._id} />)}
-        {dogs.length < 1 && <p>No dogs found with the name "{query}".</p>}
+        {dogs.length < 1 && <p>No dogs found with the name "{query.name}".</p>}
       </div>
-    </div>
+    </>
   );
 };
 
