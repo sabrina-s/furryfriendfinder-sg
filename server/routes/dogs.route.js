@@ -4,7 +4,6 @@ const Dog = require("../models/dog.model");
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 const router = express.Router();
-// FILE UPLOADS
 const uploadMulter = require("../middleware/upload");
 
 router.get("/", async (req, res) => {
@@ -24,6 +23,8 @@ router.post(
       "available",
     ]);
 
+    console.log("backend req.file", req.file); //undefined!!! formik!!
+
     const imageExists = req.file;
 
     if (imageExists) {
@@ -31,10 +32,11 @@ router.post(
     }
 
     try {
-      const dog = new Dog(dogProps);
-      await dog.save();
+      // const dog = new Dog(dogProps);
+      // await dog.save();
 
-      res.status(200).json({ dog, message: `${dog.name} added successfully!` });
+      // res.status(200).json({ dog, message: `${dog.name} added successfully!` });
+      res.status(200).json({ message: "ok" });
     } catch (error) {
       next(error);
     }
