@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import RegisterPage from "./containers/User/RegisterPage";
 import LoginPage from "./containers/User/LoginPage";
 import AdminPage from "./containers/Admin/AdminPage";
+import AvatarPage from "./containers/AvatarPage";
 import DogPage from "./containers/Dog/DogPage";
 import { UserContext } from "./context/User";
 import { useCurrentUserHook } from "./hooks/useCurrentUserHook";
@@ -33,6 +34,7 @@ function App() {
             />
             {/* TODO: Protect /admin route from non admins */}
             <Route path="/admin" render={() => <AdminPage />} />
+            <Route path="/avatar" render={() => <AvatarPage />} />
           </Switch>
         </BrowserRouter>
       </UserContext.Provider>

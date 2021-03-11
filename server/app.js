@@ -34,6 +34,33 @@ app.use("/users", usersRouter);
 const dogsRouter = require("./routes/dogs.route");
 app.use("/dogs", dogsRouter);
 
+// TODO; remove this temp testing avatar upload
+// proof of concept that using formData to upload file from frontend -- works!!
+const uploadMulter = require("./middleware/upload");
+const Avatar = require("./models/avatar.model");
+app.post("/avatars", uploadMulter, async (req, res, next) => {
+  const avatarProps = { image: req.file.filename };
+  console.log("avatarProps", avatarProps);
+  console.log("req.file", req.file);
+  try {
+    const avatar = new Avatar(avatarProps);
+    await avatar.save();
+
+    res.status(200).json({ message: `Avatar added successfully!` });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get("/avatars", async (req, res, next) => {
+  try {
+    const avatars = await Avatar.find({});
+    res.status(200).json(avatars);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Default error handler
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
