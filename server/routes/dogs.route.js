@@ -16,4 +16,6 @@ router.put("/:id", [auth.required, admin], ctrl.updateDogById);
 
 router.delete("/:id", [auth.required, admin], ctrl.deleteDogById);
 
+router.post("/:id/favourite", [auth.required], ctrl.favouriteDogById);
+
 module.exports = router;

@@ -18,14 +18,6 @@ describe("Users", () => {
     });
     await adminUser.save();
     adminToken = adminUser.generateJWT();
-
-    const user = new User({
-      username: "username",
-      password: "password",
-      isAdmin: false,
-    });
-    await user.save();
-    userToken = user.generateJWT();
   });
   afterEach(async () => await dbHandler.clearDatabase());
   afterAll(async () => await dbHandler.closeDatabase());
@@ -48,6 +40,14 @@ describe("Users", () => {
     ];
 
     await Dog.create(dogs);
+
+    const user = new User({
+      username: "username",
+      password: "password",
+      isAdmin: false,
+    });
+    await user.save();
+    userToken = user.generateJWT();
   });
 
   describe("GET /dogs", () => {
@@ -112,7 +112,7 @@ describe("Users", () => {
         available: dog.available,
       };
 
-      const response = await request(app).get(`/dogs/${dog.id}`);
+      const response = await request(app).get(`/dogs/${dog._id}`);
 
       expect(response.status).toBe(200);
       expect(response.body).toMatchObject(expectedDog);
@@ -215,6 +215,52 @@ describe("Users", () => {
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(1);
       expect(response.body[0].name).toEqual("Spangle");
+    });
+  });
+
+  describe("POST /dogs/:id/favourite", () => {
+    it("should throw error if no user logged in", async () => {
+      const dog = await Dog.findOne();
+
+      const response = await request(app)
+        .post(`/dogs/${dog._id}/favourite`)
+        .send({});
+
+      expect(response.status).toBe(500);
+    });
+
+    it("should add dog into current user's favourites", async () => {
+      const dog = await Dog.findOne();
+
+      const response = await request(app)
+        .post(`/dogs/${dog._id}/favourite`)
+        .send({})
+        .set("Cookie", `access_token=${userToken}`);
+
+      const { favourites } = await User.findOne();
+
+      expect(response.status).toBe(200);
+      expect(favourites.length).toBe(1);
+    });
+
+    it("should not add same dog into current user's favourites twice", async () => {
+      const dog = await Dog.findOne();
+
+      const response1 = await request(app)
+        .post(`/dogs/${dog._id}/favourite`)
+        .send({})
+        .set("Cookie", `access_token=${userToken}`);
+
+      const response2 = await request(app)
+        .post(`/dogs/${dog._id}/favourite`)
+        .send({})
+        .set("Cookie", `access_token=${userToken}`);
+
+      const { favourites } = await User.findOne();
+
+      expect(response1.status).toBe(200);
+      expect(response2.status).toBe(200);
+      expect(favourites.length).toBe(1);
     });
   });
 });

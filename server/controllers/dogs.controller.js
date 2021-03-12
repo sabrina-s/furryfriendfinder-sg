@@ -1,4 +1,5 @@
 const Dog = require("../models/dog.model");
+const User = require("../models/user.model");
 const { pick, isEmpty } = require("lodash");
 
 const getDogs = async (req, res, next) => {
@@ -82,10 +83,26 @@ const deleteDogById = async (req, res, next) => {
   }
 };
 
+const favouriteDogById = async (req, res, next) => {
+  try {
+    const dog = await Dog.findById(req.params.id);
+    await User.findByIdAndUpdate(req.user.id, {
+      $addToSet: { favourites: dog },
+    });
+
+    res.status(200).json({
+      message: `Favourited ${dog.name}!`,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getDogs,
   addDog,
   getDogById,
   updateDogById,
   deleteDogById,
+  favouriteDogById,
 };
