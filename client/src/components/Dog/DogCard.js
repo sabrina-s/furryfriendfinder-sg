@@ -5,6 +5,7 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
+import { Link } from 'react-router-dom';
 import React from "react";
 import { upperFirst } from "lodash";
 
@@ -29,7 +30,7 @@ const useStyles = makeStyles(() => ({
   },
   cover: {
     maxHeight: "250px",
-  },
+  }
 }));
 
 const DogCard = ({ dog }) => {
@@ -38,6 +39,7 @@ const DogCard = ({ dog }) => {
   const dogImage = image ? image : "placeholder-dog.svg";
 
   return (
+    <Link className="dogInfoLink" to={`/dog/${dog._id}`} style={{textDecoration: 'none'}}>
     <Card className={`${classes.root} ${available ? "" : "adopted"}`}>
       <CardMedia
         component="img"
@@ -47,6 +49,7 @@ const DogCard = ({ dog }) => {
         alt={`Picture of ${name}`}
       />
       <div className={classes.details}>
+        
         <CardContent>
           <Typography component="h5" variant="h5">
             {name}
@@ -65,6 +68,7 @@ const DogCard = ({ dog }) => {
         </CardContent>
       </div>
     </Card>
+    </Link>
   );
 };
 

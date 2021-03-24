@@ -6,6 +6,7 @@ import RegisterPage from "./containers/User/RegisterPage";
 import LoginPage from "./containers/User/LoginPage";
 import AdminPage from "./containers/Admin/AdminPage";
 import DogPage from "./containers/Dog/DogPage";
+import DogInfo from "./containers/Dog/DogInfo";
 import { UserContext } from "./context/User";
 import { useCurrentUserHook } from "./hooks/useCurrentUserHook";
 import { Provider } from "react-redux";
@@ -23,6 +24,7 @@ function App() {
           <Navbar setCurrentUser={setCurrentUser} />
           <Switch>
             <Route path="/" exact component={DogPage} />
+            <Route path="/dog/:dogId" exact component={DogInfo}/>
             <Route
               path="/register"
               render={() => <RegisterPage setCurrentUser={setCurrentUser} />}
