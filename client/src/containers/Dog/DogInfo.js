@@ -1,10 +1,10 @@
-import {
-    Card,
-    CardContent,
-    CardMedia,
-    makeStyles,
-    Typography,
-  } from "@material-ui/core";
+// import {
+//     Card,
+//     CardContent,
+//     CardMedia,
+//     makeStyles,
+//     Typography,
+//   } from "@material-ui/core";
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import { DOGS_API } from "../../constants/api";
@@ -31,11 +31,9 @@ import axios from "axios";
 
     useEffect(() => {
       axios.get(`${DOGS_API}/${dogId}`).then((response) => {
-        console.log(response.data)
         setDogData(response.data)
       });
     }, [dogId])
-
 
       return (
       <>
