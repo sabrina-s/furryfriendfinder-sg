@@ -8,7 +8,7 @@ describe("DogTable", () => {
     render(
       <Provider store={store}>
         <DogTable />
-      </Provider>
+      </Provider>,
     );
 
     const table = screen.getByTestId("dog-table");

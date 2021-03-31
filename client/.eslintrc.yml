@@ -6,6 +6,7 @@ env:
   browser: true
   es6: true
   node: true
+  jest: true
 plugins:
   - react
   - prettier
@@ -21,3 +22,4 @@ rules:
   prettier/prettier: error
   react/prop-types: 0 
   react/no-unescaped-entities: 0
+  react/react-in-jsx-scope: 0
