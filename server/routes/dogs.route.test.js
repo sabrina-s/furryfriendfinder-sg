@@ -200,7 +200,7 @@ describe("Users", () => {
   describe("GET /dogs?hdbApprovedOnly=true", () => {
     it("should return only HDB-approved dogs", async () => {
       const response = await request(app).get(
-        `/dogs?hdbApprovedOnly=true&gender=all`
+        `/dogs?hdbApprovedOnly=true&gender=all`,
       );
 
       expect(response.status).toBe(200);
@@ -211,7 +211,7 @@ describe("Users", () => {
   describe("GET /dogs?name=spang&hdbApprovedOnly=false", () => {
     it("should return all matched dogs regardless of HDB approval status", async () => {
       const response = await request(app).get(
-        `/dogs?name=spang&hdbApprovedOnly=false&gender=all`
+        `/dogs?name=spang&hdbApprovedOnly=false&gender=all`,
       );
 
       expect(response.status).toBe(200);

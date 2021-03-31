@@ -1,5 +1,4 @@
-const request = require("supertest");
-const app = require("../app");
+require("../app");
 const dbHandler = require("../config/dbHandler");
 const User = require("../models/user.model");
 
