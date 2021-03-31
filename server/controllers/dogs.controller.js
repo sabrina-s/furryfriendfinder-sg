@@ -36,7 +36,7 @@ const addDog = async (req, res, next) => {
         "hdbApproved",
         "available",
         "image",
-      ])
+      ]),
     );
     await dog.save();
 
@@ -67,7 +67,7 @@ const updateDogById = async (req, res, next) => {
         "available",
         "image",
       ]),
-      { new: true }
+      { new: true },
     );
 
     res.status(200).json({ message: `${dog.name} updated successfully!` });

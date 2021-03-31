@@ -1,6 +1,4 @@
-const { pick } = require("lodash");
 const express = require("express");
-const Dog = require("../models/dog.model");
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 const router = express.Router();

@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: process.env.ORIGIN_URL || "http://localhost:3000",
     credentials: true,
-  })
+  }),
 );
 
 // Routes
