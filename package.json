@@ -6,7 +6,8 @@
     "start": "npm run start --prefix ./server",
     "test": "npm run test --prefix ./client && npm run test --prefix ./server",
     "install": "npm install --prefix ./client && npm install --prefix ./server",
-    "heroku-postbuild": "npm run build --prefix ./client"
+    "heroku-postbuild": "npm run build --prefix ./client",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -17,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/sabrina-s/furryfriendfinder-sg/issues"
   },
-  "homepage": "https://github.com/sabrina-s/furryfriendfinder-sg#readme"
+  "homepage": "https://github.com/sabrina-s/furryfriendfinder-sg#readme",
+  "devDependencies": {
+    "husky": "^6.0.0"
+  }
 }

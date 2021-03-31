@@ -7,7 +7,7 @@ import Logout from "./Logout";
 import FFFIconText from "../../components/common/FFFIconText";
 import "../../stylesheets/buttons.css";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   title: {
     color: "#6a3838",
     textDecoration: "none",

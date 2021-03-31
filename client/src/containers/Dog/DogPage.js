@@ -54,7 +54,7 @@ const DogPage = (props) => {
     setQuery({ ...query, name: e.target.value.trim() });
   };
 
-  const handleHdbOnlyChange = (e) => {
+  const handleHdbOnlyChange = () => {
     setQuery({
       ...query,
       hdbApprovedOnly: !query.hdbApprovedOnly,
