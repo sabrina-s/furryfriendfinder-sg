@@ -12,9 +12,6 @@ const getDogs = async (req, res, next) => {
     if (req.query.hdbApprovedOnly === "true") {
       query["hdbApproved"] = req.query.hdbApprovedOnly;
     }
-    if (req.query.gender !== "all") {
-      query["gender"] = req.query.gender;
-    }
 
     const dogs = !isEmpty(query)
       ? await Dog.find(query).exec()

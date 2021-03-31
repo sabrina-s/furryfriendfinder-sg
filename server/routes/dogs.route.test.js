@@ -52,7 +52,7 @@ describe("Users", () => {
 
   describe("GET /dogs", () => {
     it("should retrieve all dogs in the system", async () => {
-      const response = await request(app).get("/dogs?gender=all");
+      const response = await request(app).get("/dogs");
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(2);
@@ -177,7 +177,7 @@ describe("Users", () => {
     it("should return dogs with 'bernie' in the name", async () => {
       const query = "bernie";
 
-      const response = await request(app).get(`/dogs?name=${query}&gender=all`);
+      const response = await request(app).get(`/dogs?name=${query}`);
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(1);
@@ -189,7 +189,7 @@ describe("Users", () => {
     it("should return dogs with 'bern' in the name", async () => {
       const query = "bern";
 
-      const response = await request(app).get(`/dogs?name=${query}&gender=all`);
+      const response = await request(app).get(`/dogs?name=${query}`);
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(1);
@@ -199,9 +199,7 @@ describe("Users", () => {
 
   describe("GET /dogs?hdbApprovedOnly=true", () => {
     it("should return only HDB-approved dogs", async () => {
-      const response = await request(app).get(
-        `/dogs?hdbApprovedOnly=true&gender=all`,
-      );
+      const response = await request(app).get(`/dogs?hdbApprovedOnly=true`);
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(1);
@@ -211,32 +209,12 @@ describe("Users", () => {
   describe("GET /dogs?name=spang&hdbApprovedOnly=false", () => {
     it("should return all matched dogs regardless of HDB approval status", async () => {
       const response = await request(app).get(
-        `/dogs?name=spang&hdbApprovedOnly=false&gender=all`,
+        `/dogs?name=spang&hdbApprovedOnly=false`,
       );
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(1);
       expect(response.body[0].name).toEqual("Spangle");
-    });
-  });
-
-  describe("GET /dogs?gender=female", () => {
-    it("should return only female dogs", async () => {
-      const response = await request(app).get(`/dogs?gender=female`);
-
-      expect(response.status).toBe(200);
-      expect(response.body.length).toBe(1);
-      expect(response.body[0].name).toEqual("Spangle");
-    });
-  });
-
-  describe("GET /dogs?gender=male", () => {
-    it("should return only male dogs", async () => {
-      const response = await request(app).get(`/dogs?gender=male`);
-
-      expect(response.status).toBe(200);
-      expect(response.body.length).toBe(1);
-      expect(response.body[0].name).toEqual("Bernie");
     });
   });
 

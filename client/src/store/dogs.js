@@ -30,13 +30,11 @@ export const getAllDogs = () => {
 };
 
 export const searchDogs = (query) => {
-  const nameQuery = `name=${query.name}`;
-  const hdbApprovedQuery = `hdbApprovedOnly=${query.hdbApprovedOnly}`;
-  const genderQuery = `gender=${query.gender}`;
-
   return (dispatch) => {
     return axios
-      .get(`${DOGS_API}?${nameQuery}&${hdbApprovedQuery}&${genderQuery}`)
+      .get(
+        `${DOGS_API}?name=${query.name}&hdbApprovedOnly=${query.hdbApprovedOnly}`,
+      )
       .then((response) => sortBy(response.data, [(dog) => !dog.available]))
       .then((dogs) => dispatch(getAllDogsSuccess(dogs)))
       .catch((error) => dispatch(getAllDogsFailure(error)));
