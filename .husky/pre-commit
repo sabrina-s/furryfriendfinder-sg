@@ -4,3 +4,7 @@
 cd client
 npm run lint
 CI=true npm test
+
+cd ../server
+npm run lint
+npm test
