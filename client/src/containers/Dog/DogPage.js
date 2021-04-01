@@ -40,6 +40,7 @@ const DogPage = (props) => {
     name: "",
     gender: "all",
     hdbApprovedOnly: false,
+    available: true,
   });
 
   useEffect(() => {
@@ -101,7 +102,10 @@ const DogPage = (props) => {
         />
       </div>
       <div className={classes.dogs}>
-        {dogs && dogs.map((dog) => <DogCard dog={dog} key={dog._id} />)}
+        {dogs &&
+          dogs.map((dog) => {
+            return dog.available ? <DogCard dog={dog} key={dog._id} /> : <></>;
+          })}
         {dogs.length < 1 && <p>No dogs found with the name "{query.name}".</p>}
       </div>
     </>
