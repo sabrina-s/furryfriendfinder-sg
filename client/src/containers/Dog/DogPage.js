@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DogCard from "../../components/Dog/DogCard";
-import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  makeStyles,
-  MenuItem,
-  Select,
-} from "@material-ui/core";
+import { Checkbox, FormControlLabel, makeStyles } from "@material-ui/core";
 import { getAllDogs, searchDogs } from "../../store/dogs";
 import { connect } from "react-redux";
 import FFFTextField from "../../components/common/FFFTextField";
@@ -23,25 +15,16 @@ const useStyles = makeStyles({
   },
   filter: {
     display: "flex",
-    alignItems: "baseline",
-    justifyContent: "center",
-    flexDirection: "row",
+    alignItems: "center",
+    flexDirection: "column",
     paddingTop: "20px",
-  },
-  gender: {
-    width: "100px",
   },
 });
 
 const DogPage = (props) => {
   const classes = useStyles();
   const { dogs, getAllDogs, searchDogs } = props;
-  const [query, setQuery] = useState({
-    name: "",
-    gender: "all",
-    hdbApprovedOnly: false,
-    available: true,
-  });
+  const [query, setQuery] = useState({ name: "", hdbApprovedOnly: false });
 
   useEffect(() => {
     getAllDogs();
@@ -55,17 +38,10 @@ const DogPage = (props) => {
     setQuery({ ...query, name: e.target.value.trim() });
   };
 
-  const handleHdbOnlyChange = (e) => {
+  const handleHdbOnlyChange = () => {
     setQuery({
       ...query,
       hdbApprovedOnly: !query.hdbApprovedOnly,
-    });
-  };
-
-  const handleGenderChange = (e) => {
-    setQuery({
-      ...query,
-      gender: e.target.value,
     });
   };
 
@@ -76,30 +52,19 @@ const DogPage = (props) => {
           <FFFTextField onChange={handleNameChange} />
           <Search />
         </div>
-        <FormControl>
-          <InputLabel shrink>Gender</InputLabel>
-          <Select
-            id="gender"
-            value={query.gender}
-            onChange={handleGenderChange}
-            className={classes.gender}
-          >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControlLabel
-          control={
-            <Checkbox
-              id="hdbApproved"
-              checked={query.hdbApprovedOnly}
-              value={query.hdbApprovedOnly}
-              onChange={handleHdbOnlyChange}
-            />
-          }
-          label="Only HDB approved"
-        />
+        <div>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="hdbApproved"
+                checked={query.hdbApprovedOnly}
+                value={query.hdbApprovedOnly}
+                onChange={handleHdbOnlyChange}
+              />
+            }
+            label="Only HDB approved"
+          />
+        </div>
       </div>
       <div className={classes.dogs}>
         {dogs &&

@@ -9,7 +9,7 @@ export const useCurrentUserHook = () => {
     axios
       .get(ME_API, { withCredentials: true })
       .then((user) => setCurrentUser(user.data))
-      .catch((err) => console.error("Not logged in."));
+      .catch(() => console.error("Not logged in."));
   }, []);
 
   return {

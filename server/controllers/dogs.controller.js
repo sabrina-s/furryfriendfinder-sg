@@ -12,9 +12,6 @@ const getDogs = async (req, res, next) => {
     if (req.query.hdbApprovedOnly === "true") {
       query["hdbApproved"] = req.query.hdbApprovedOnly;
     }
-    if (req.query.gender !== "all") {
-      query["gender"] = req.query.gender;
-    }
 
     const dogs = !isEmpty(query)
       ? await Dog.find(query).exec()
@@ -36,7 +33,7 @@ const addDog = async (req, res, next) => {
         "hdbApproved",
         "available",
         "image",
-      ])
+      ]),
     );
     await dog.save();
 
@@ -67,7 +64,7 @@ const updateDogById = async (req, res, next) => {
         "available",
         "image",
       ]),
-      { new: true }
+      { new: true },
     );
 
     res.status(200).json({ message: `${dog.name} updated successfully!` });

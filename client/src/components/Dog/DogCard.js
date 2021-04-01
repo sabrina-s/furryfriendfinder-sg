@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import { upperFirst } from "lodash";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     margin: "20px",
     width: "400px",

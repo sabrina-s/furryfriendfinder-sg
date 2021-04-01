@@ -8,8 +8,8 @@ describe("AddDog", () => {
     render(
       <Provider store={store}>
         <AddDog />
-      </Provider>
-    )
+      </Provider>,
+    ),
   );
   it("should render form to add a new dog", () => {
     const form = screen.getByTestId("add-dog-form");
@@ -24,7 +24,7 @@ describe("AddDog", () => {
     const nameError = await screen.findByText(/please enter name/i);
     const genderError = await screen.findByText(/please select gender/i);
     const descriptionError = await screen.findByText(
-      /please enter a short description/i
+      /please enter a short description/i,
     );
 
     expect(nameError).toBeInTheDocument();

@@ -52,7 +52,7 @@ userSchema.methods.generateJWT = function () {
     secret,
     {
       expiresIn: "1d",
-    }
+    },
   );
 };
 

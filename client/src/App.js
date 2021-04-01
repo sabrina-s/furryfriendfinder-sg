@@ -24,7 +24,7 @@ function App() {
           <Navbar setCurrentUser={setCurrentUser} />
           <Switch>
             <Route path="/" exact component={DogPage} />
-            <Route path="/dog/:dogId" exact component={DogInfo}/>
+            <Route path="/dog/:dogId" exact component={DogInfo} />
             <Route
               path="/register"
               render={() => <RegisterPage setCurrentUser={setCurrentUser} />}
