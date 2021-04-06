@@ -42,7 +42,7 @@ const DogCard = ({ dog }) => {
   const dogImage = image ? image : "placeholder-dog.svg";
 
   return (
-    <Link className={classes.dogInfoLink} to={`/dog/${dog._id}`}>
+    <Link className={`${classes.dogInfoLink} dog`} to={`/dog/${dog._id}`}>
       <Card className={`${classes.root} ${available ? "" : "adopted"}`}>
         <CardMedia
           component="img"

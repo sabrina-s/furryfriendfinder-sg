@@ -49,7 +49,7 @@ const DogPage = (props) => {
     <>
       <div className={classes.filter}>
         <div>
-          <FFFTextField onChange={handleNameChange} />
+          <FFFTextField onChange={handleNameChange} id="search-dog-name" />
           <Search />
         </div>
         <div>
@@ -66,7 +66,7 @@ const DogPage = (props) => {
           />
         </div>
       </div>
-      <div className={classes.dogs}>
+      <div className={`${classes.dogs} dogs`}>
         {dogs &&
           dogs.map((dog) => {
             return dog.available ? <DogCard dog={dog} key={dog._id} /> : <></>;
