@@ -1,19 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@4.2.0
-  cypress: cypress-io/cypress@1.27.0
 workflows:
-  build:
-    jobs:
-      - cypress/install:
-          working_directory: client
-          build: "npm run build"
-      - cypress/run:
-          requires:
-            - cypress/install
-          working_directory: client
-          start: npm start
-          store_artifacts: true
   node-tests:
     jobs:
       - node/test
