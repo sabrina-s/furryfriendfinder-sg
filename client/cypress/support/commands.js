@@ -16,6 +16,10 @@ Cypress.Commands.add("login", (username, password) => {
   cy.get("input[name='password']").type(password);
   cy.get("Button").contains("Login").click();
 });
+
+Cypress.Commands.add("logout", () => {
+  cy.get("#logout-button").click();
+});
 //
 //
 // -- This is a child command --

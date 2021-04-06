@@ -18,7 +18,7 @@ const Logout = ({ setCurrentUser }) => {
   };
 
   return (
-    <div className="btn__plain" onClick={handleLogout}>
+    <div className="btn__plain" onClick={handleLogout} id="logout-button">
       Logout
     </div>
   );

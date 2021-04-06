@@ -5,5 +5,12 @@ context("user setup", () => {
 
     cy.location("pathname").should("eq", "/");
     cy.get("#navbar").should("contain", "username", "logout");
+    cy.getCookie("access_token").should("have.property", "value");
+  });
+
+  it("logout", () => {
+    cy.logout();
+    cy.getCookie("access_token").should("equal", null);
+    cy.get("#navbar").should("not.contain", "username", "logout");
   });
 });
