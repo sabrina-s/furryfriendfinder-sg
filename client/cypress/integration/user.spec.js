@@ -1,6 +1,10 @@
 context("user setup", () => {
   it("login", () => {
-    cy.visit("/login");
+    cy.visit("/login", {
+      headers: {
+        "Accept-Encoding": "gzip, deflate",
+      },
+    });
     cy.login("username", "password");
 
     cy.location("pathname").should("eq", "/");
