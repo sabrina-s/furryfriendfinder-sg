@@ -31,6 +31,9 @@ const useStyles = makeStyles(() => ({
   cover: {
     maxHeight: "250px",
   },
+  dogInfoLink: {
+    textDecoration: "none",
+  },
 }));
 
 const DogCard = ({ dog }) => {
