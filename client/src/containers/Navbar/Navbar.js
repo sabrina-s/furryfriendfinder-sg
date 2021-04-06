@@ -34,7 +34,12 @@ const Navbar = ({ setCurrentUser }) => {
   const currentUser = useContext(UserContext);
 
   return (
-    <AppBar position="static" className={classes.appBar} data-testid="navbar">
+    <AppBar
+      position="static"
+      className={classes.appBar}
+      id="navbar"
+      data-testid="navbar"
+    >
       <Toolbar className={classes.toolbar}>
         <div className="nav-left fff__flex fff__center_align">
           <img
