@@ -1,26 +1,28 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { DOGS_API } from "../../constants/api";
-import { Box } from "@material-ui/core";
+import { Box, makeStyles } from "@material-ui/core";
 import axios from "axios";
 
-// const useStyles = makeStyles({
-//   dogs: {
-//     display: "flex",
-//     flexWrap: "wrap",
-//     padding: "0 100px",
-//     justifyContent: "center",
-//   },
-//   filter: {
-//     display: "flex",
-//     alignItems: "center",
-//     flexDirection: "column",
-//     paddingTop: "20px",
-//   },
-// });
+const useStyles = makeStyles({
+  dogMugshot: {
+    width: "75%",
+  },
+  dogInfoContainer: {
+    width: "75%",
+  },
+  container: {
+    width: "50%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "centre",
+  },
+});
 
 const DogInfo = () => {
   let { dogId } = useParams();
+  const classes = useStyles();
   const [dogData, setDogData] = useState({
     name: "Loading",
     image: "placeholder-dog.svg",
@@ -28,23 +30,25 @@ const DogInfo = () => {
 
   const renderDogInfo = (data) => {
     return (
-      <div id="mugShotContainer">
-        <Box id="dogMugshot" width="100%" maxWidth="500px">
+      <Box className={classes.container}>
+        <Box className={classes.dogInfoContainer}>
+          <h1>{data.name}</h1>
+        </Box>
+        <Box className={classes.dogMugshot}>
           <img
             src={`${process.env.PUBLIC_URL}/assets/${data.image}`}
             alt={data.name}
             width="75%"
           />
         </Box>
-        <Box id="dogInfoContainer" width="100%">
-          <h1>{data.name}</h1>
+        <Box className={classes.dogInfoContainer}>
           <div>
             <p>Gender: {data.gender}</p>
             <p>HDB Approved: {data.hdbApproved ? "Yes" : "No"}</p>
             <p>Description: {data.description}</p>
           </div>
         </Box>
-      </div>
+      </Box>
     );
   };
 
