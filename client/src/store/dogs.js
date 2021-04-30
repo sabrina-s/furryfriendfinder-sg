@@ -14,18 +14,6 @@ const getAllDogsSuccess = (dogs) => ({
   dogs,
 });
 
-const getAvailDogsSuccess = (dogs) => {
-  const dogAvail = dogs.map((dog) => {
-    if (dog.available) {
-      return dog;
-    }
-  });
-  return {
-    type: GET_ALL_DOGS_SUCCESS,
-    dogs: dogAvail,
-  };
-};
-
 const getAllDogsFailure = (error) => ({
   type: GET_ALL_DOGS_FAILURE,
   error,
@@ -46,7 +34,7 @@ export const getAvailableDogs = () => {
     return axios
       .get(`${DOGS_API}?available=true`)
       .then((response) => {
-        dispatch(getAvailDogsSuccess(response.data));
+        dispatch(getAllDogsSuccess(response.data));
       })
       .catch((error) => dispatch(getAllDogsFailure(error)));
   };
