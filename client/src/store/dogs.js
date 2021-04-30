@@ -29,17 +29,6 @@ export const getAllDogs = () => {
   };
 };
 
-export const getAvailableDogs = () => {
-  return (dispatch) => {
-    return axios
-      .get(`${DOGS_API}?available=true`)
-      .then((response) => {
-        dispatch(getAllDogsSuccess(response.data));
-      })
-      .catch((error) => dispatch(getAllDogsFailure(error)));
-  };
-};
-
 export const searchDogs = (query) => {
   return (dispatch) => {
     return axios
@@ -110,8 +99,6 @@ const initialState = {
 function dogsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_DOGS_SUCCESS:
-      console.log("reducer all");
-      console.log(state);
       return {
         ...state,
         dogs: action.dogs,
