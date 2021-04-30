@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DogCard from "../../components/Dog/DogCard";
 import { Checkbox, FormControlLabel, makeStyles } from "@material-ui/core";
-import { getAllDogs, searchDogs } from "../../store/dogs";
+import { searchDogs } from "../../store/dogs";
 import { connect } from "react-redux";
 import FFFTextField from "../../components/common/FFFTextField";
 import { Search } from "@material-ui/icons";
@@ -23,12 +23,12 @@ const useStyles = makeStyles({
 
 const DogPage = (props) => {
   const classes = useStyles();
-  const { dogs, getAllDogs, searchDogs } = props;
-  const [query, setQuery] = useState({ name: "", hdbApprovedOnly: false });
-
-  useEffect(() => {
-    getAllDogs();
-  }, [getAllDogs]);
+  const { dogs, searchDogs } = props;
+  const [query, setQuery] = useState({
+    name: "",
+    hdbApprovedOnly: false,
+    available: true,
+  });
 
   useEffect(() => {
     searchDogs(query);
@@ -84,7 +84,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  getAllDogs,
   searchDogs,
 };
 

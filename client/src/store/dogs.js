@@ -23,7 +23,7 @@ export const getAllDogs = () => {
   return (dispatch) => {
     return axios
       .get(DOGS_API)
-      .then((response) => sortBy(response.data, [(dog) => !dog.available]))
+      .then((response) => sortBy(response.data))
       .then((dogs) => dispatch(getAllDogsSuccess(dogs)))
       .catch((error) => dispatch(getAllDogsFailure(error)));
   };
@@ -33,7 +33,7 @@ export const searchDogs = (query) => {
   return (dispatch) => {
     return axios
       .get(
-        `${DOGS_API}?name=${query.name}&hdbApprovedOnly=${query.hdbApprovedOnly}`,
+        `${DOGS_API}?name=${query.name}&hdbApprovedOnly=${query.hdbApprovedOnly}&available=${query.available}`,
       )
       .then((response) => sortBy(response.data, [(dog) => !dog.available]))
       .then((dogs) => dispatch(getAllDogsSuccess(dogs)))

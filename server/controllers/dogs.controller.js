@@ -13,6 +13,10 @@ const getDogs = async (req, res, next) => {
       query["hdbApproved"] = req.query.hdbApprovedOnly;
     }
 
+    if (req.query.available === "true") {
+      query["available"] = req.query.available;
+    }
+
     const dogs = !isEmpty(query)
       ? await Dog.find(query).exec()
       : await Dog.find({});
