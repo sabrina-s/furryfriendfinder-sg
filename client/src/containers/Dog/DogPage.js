@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import DogCard from "../../components/Dog/DogCard";
 import { Checkbox, FormControlLabel, makeStyles } from "@material-ui/core";
 import { searchDogs, getAvailableDogs } from "../../store/dogs";
-// import { getAllDogs, searchDogs } from "../../store/dogs";
 import { connect } from "react-redux";
 import FFFTextField from "../../components/common/FFFTextField";
 import { Search } from "@material-ui/icons";
@@ -25,16 +24,11 @@ const useStyles = makeStyles({
 const DogPage = (props) => {
   const classes = useStyles();
   const { dogs, searchDogs, getAvailableDogs } = props;
-  // const { dogs, searchDogs, getAllDogs } = props;
   const [query, setQuery] = useState({
     name: "",
     hdbApprovedOnly: false,
     available: true,
   });
-
-  // useEffect(() => {
-  //   getAllDogs();
-  // }, [getAllDogs]);
 
   useEffect(() => {
     getAvailableDogs();
@@ -77,13 +71,9 @@ const DogPage = (props) => {
         </div>
       </div>
       <div className={`${classes.dogs} dogs`}>
-        {/* {dogs &&
-          dogs.map((dog) => {
-            return dog.available ? <DogCard dog={dog} key={dog._id} /> : <></>;
-          })} */}
         {dogs &&
           dogs.map((dog) => {
-            return <DogCard dog={dog} key={dog._id} />;
+            return dog.available ? <DogCard dog={dog} key={dog._id} /> : <></>;
           })}
         {dogs.length < 1 && <p>No dogs found with the name "{query.name}".</p>}
       </div>
@@ -98,7 +88,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  // getAllDogs,
   getAvailableDogs,
   searchDogs,
 };
