@@ -14,6 +14,18 @@ const getAllDogsSuccess = (dogs) => ({
   dogs,
 });
 
+const getAvailDogsSuccess = (dogs) => {
+  const dogAvail = dogs.map((dog) => {
+    if (dog.available) {
+      return dog;
+    }
+  });
+  return {
+    type: GET_ALL_DOGS_SUCCESS,
+    dogs: dogAvail,
+  };
+};
+
 const getAllDogsFailure = (error) => ({
   type: GET_ALL_DOGS_FAILURE,
   error,
@@ -23,8 +35,19 @@ export const getAllDogs = () => {
   return (dispatch) => {
     return axios
       .get(DOGS_API)
-      .then((response) => sortBy(response.data, [(dog) => !dog.available]))
+      .then((response) => sortBy(response.data))
       .then((dogs) => dispatch(getAllDogsSuccess(dogs)))
+      .catch((error) => dispatch(getAllDogsFailure(error)));
+  };
+};
+
+export const getAvailableDogs = () => {
+  return (dispatch) => {
+    return axios
+      .get(`${DOGS_API}?available=true`)
+      .then((response) => {
+        dispatch(getAvailDogsSuccess(response.data));
+      })
       .catch((error) => dispatch(getAllDogsFailure(error)));
   };
 };
@@ -33,7 +56,7 @@ export const searchDogs = (query) => {
   return (dispatch) => {
     return axios
       .get(
-        `${DOGS_API}?name=${query.name}&hdbApprovedOnly=${query.hdbApprovedOnly}`,
+        `${DOGS_API}?name=${query.name}&hdbApprovedOnly=${query.hdbApprovedOnly}&available=${query.available}`,
       )
       .then((response) => sortBy(response.data, [(dog) => !dog.available]))
       .then((dogs) => dispatch(getAllDogsSuccess(dogs)))
@@ -99,6 +122,8 @@ const initialState = {
 function dogsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_DOGS_SUCCESS:
+      console.log("reducer all");
+      console.log(state);
       return {
         ...state,
         dogs: action.dogs,
