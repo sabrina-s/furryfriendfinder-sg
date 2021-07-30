@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/sabrina-s/furryfriendfinder-sg#readme",
   "devDependencies": {
+    "@welldone-software/why-did-you-render": "^6.2.0",
     "husky": "^6.0.0"
   }
 }
