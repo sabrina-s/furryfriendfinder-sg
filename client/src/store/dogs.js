@@ -4,9 +4,9 @@ import { sortBy } from "lodash";
 import { showSnackbar, clearSnackbar } from "./alerts";
 
 // action types
-const GET_ALL_DOGS_SUCCESS = "GET_ALL_DOGS_SUCCESS";
-const GET_ALL_DOGS_FAILURE = "GET_ALL_DOGS_FAILURE";
-const ADD_DOG_SUCCESS = "ADD_DOG_SUCCESS";
+export const GET_ALL_DOGS_SUCCESS = "GET_ALL_DOGS_SUCCESS";
+export const GET_ALL_DOGS_FAILURE = "GET_ALL_DOGS_FAILURE";
+export const ADD_DOG_SUCCESS = "ADD_DOG_SUCCESS";
 
 // action creators
 const getAllDogsSuccess = (dogs) => ({
@@ -90,27 +90,3 @@ export const deleteDog = (id) => {
       .catch(console.error);
   };
 };
-
-// reducer
-const initialState = {
-  dogs: [],
-};
-
-function dogsReducer(state = initialState, action) {
-  switch (action.type) {
-    case GET_ALL_DOGS_SUCCESS:
-      return {
-        ...state,
-        dogs: action.dogs,
-      };
-    case ADD_DOG_SUCCESS:
-      return {
-        ...state,
-        dogs: [...state.dogs, action.dog],
-      };
-    default:
-      return state;
-  }
-}
-
-export default dogsReducer;
