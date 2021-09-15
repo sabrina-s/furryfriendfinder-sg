@@ -29,9 +29,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Navbar = ({ setCurrentUser }) => {
+const Navbar = () => {
   const classes = useStyles();
-  const currentUser = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   return (
     <AppBar

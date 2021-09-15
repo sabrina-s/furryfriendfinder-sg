@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { REGISTER_API } from "../../constants/api";
 import { useFormik } from "formik";
@@ -7,9 +7,11 @@ import axios from "axios";
 import { Button } from "@material-ui/core";
 import "../../stylesheets/forms.css";
 import FFFTextField from "../../components/common/FFFTextField";
+import { UserContext } from "../../context/User";
 
-const RegisterPage = ({ setCurrentUser }) => {
+const RegisterPage = () => {
   const history = useHistory();
+  const { setCurrentUser } = useContext(UserContext);
 
   const handleRegister = (values) => {
     axios

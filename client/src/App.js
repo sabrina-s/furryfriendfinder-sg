@@ -19,21 +19,15 @@ function App() {
 
   return (
     <Provider store={store}>
-      <UserContext.Provider value={currentUser}>
+      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
         <BrowserRouter>
           <Alerts />
-          <Navbar setCurrentUser={setCurrentUser} />
+          <Navbar />
           <Switch>
             <Route path="/" exact component={DogPage} />
             <Route path="/dog/:dogId" exact component={DogInfo} />
-            <Route
-              path="/register"
-              render={() => <RegisterPage setCurrentUser={setCurrentUser} />}
-            />
-            <Route
-              path="/login"
-              render={() => <LoginPage setCurrentUser={setCurrentUser} />}
-            />
+            <Route path="/register" render={() => <RegisterPage />} />
+            <Route path="/login" render={() => <LoginPage />} />
             {currentUser && currentUser.isAdmin ? (
               <Route path="/admin" render={() => <AdminPage />} />
             ) : (

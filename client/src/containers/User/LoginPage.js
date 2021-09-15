@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { LOGIN_API } from "../../constants/api";
 import { useFormik } from "formik";
@@ -8,9 +8,11 @@ import { Button } from "@material-ui/core";
 import "../../stylesheets/forms.css";
 import FFFTextField from "../../components/common/FFFTextField";
 import FFFSnackbar from "../../components/common/FFFSnackbar";
+import { UserContext } from "../../context/User";
 
-const LoginPage = ({ setCurrentUser }) => {
+const LoginPage = () => {
   const history = useHistory();
+  const { setCurrentUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = (values) => {
